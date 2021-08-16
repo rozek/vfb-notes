@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "description": "a simple demonstrator for voltcloud-for-browsers",
   "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "start": "sirv public --port 7654 --host --cors",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
