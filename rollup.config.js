@@ -5,8 +5,6 @@ import commonjs       from '@rollup/plugin-commonjs'
 import resolve        from '@rollup/plugin-node-resolve'
 import autoPreprocess from 'svelte-preprocess'
 import typescript     from '@rollup/plugin-typescript'
-import postcss        from 'rollup-plugin-postcss'
-import saveToFile     from 'save-to-file'
 import livereload     from 'rollup-plugin-livereload'
 import { terser }     from 'rollup-plugin-terser'
 import css            from "rollup-plugin-css-only"
@@ -39,7 +37,7 @@ export default {
     sourcemap:true,
     format:   'iife',
     name:     'app',
-    file:     './build/index.js'
+    file:     './dist/index.js'
   },
   plugins: [
     svelte({ preprocess:[
@@ -51,7 +49,7 @@ export default {
     resolve({ browser:true, dedupe:['svelte'] }), commonjs(), typescript(),
 
     ! production && serve(),
-    ! production && livereload('./build'),
+    ! production && livereload('./dist'),
 
     production && terser()
   ],
