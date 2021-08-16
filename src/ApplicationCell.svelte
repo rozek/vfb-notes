@@ -1,8 +1,4 @@
 <style>
-  :global(*) {
-    -moz-box-sizing:border-box; -webkit-box-sizing:border-box; box-sizing:border-box;
-  }
-
   .ApplicationCell {
     display:block; position:absolute; overflow:hidden;
     width:320px; height:480px;
