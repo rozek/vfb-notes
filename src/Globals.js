@@ -1,12 +1,15 @@
   import { writable } from 'svelte/store'
 
   const { subscribe, set, update } = writable({
-    AccessToken:       undefined,
-    ConfirmationToken: undefined,
-    ResetToken:        undefined,
-    EMailAddress:      undefined,
-    Password:          undefined,
-    State:             undefined
+    ApplicationURL:    'https://vfb-notes.volt.live/',
+    ApplicationId:     'd3CX6D',
+    AccessToken:       sessionStorage['vfb-notes: access-token'] || '',
+    ConfirmationToken: '',
+    ResetToken:        '',
+    EMailAddress:      localStorage['vfb-notes: email-address']  || '',
+    Password:          sessionStorage['vfb-notes: password']     || '',
+    loggedIn:          false,
+    State:             ''
   })
 
   function define (KeyOrObject, Value) {
@@ -33,13 +36,5 @@
       }
     }
   }
-
-  define({
-    AccessToken:       sessionStorage['vfb-notes: access-token'] || '',
-    ConfirmationToken: '',
-    ResetToken:        '',
-    EMailAddress:      localStorage['vfb-notes: email-address']  || '',
-    Password:          sessionStorage['vfb-notes: password']     || ''
-  })
 
   export const Globals = { subscribe, define }
