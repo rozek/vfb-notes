@@ -166,7 +166,7 @@
       if (Signal.name === 'LoginFailed') {
         Globals.define('State','LoginFailure')
       } else {
-        Globals.define({ State:'CommunicationFailure', FailureReason:SignaltoString() })
+        Globals.define({ State:'CommunicationFailure', FailureReason:Signal.toString() })
       }
       return
     }
