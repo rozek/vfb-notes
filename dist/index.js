@@ -368,17 +368,22 @@ var app = (function () {
     		c() {
     			div7 = element("div");
 
-    			div7.innerHTML = `<div class="svelte-2aqix3"><div name="CloseButton" class="svelte-2aqix3">×</div> 
-    <div name="Title" class="svelte-2aqix3">Please Login</div> 
-    <input name="EMailAddressInput" type="email" required="" placeholder="your email address" class="svelte-2aqix3"/> 
-    <div class="FormMessage svelte-2aqix3"> </div> 
-    <input name="PasswordInput" type="password" required="" minlength="10" placeholder="your password" class="svelte-2aqix3"/> 
-    <div class="FormMessage svelte-2aqix3"> </div> 
-    <div name="ForgottenPassword" class="svelte-2aqix3"><a href="" class="svelte-2aqix3">Forgot your password?</a></div> 
-    <button name="LoginButton" class="svelte-2aqix3">Login</button> 
-    <div style="text-align:center">Don&#39;t have an account? <a href="" class="svelte-2aqix3">Create one!</a></div></div>`;
+    			div7.innerHTML = `<div class="svelte-1h0ucju"><div name="CloseButton" class="svelte-1h0ucju">×</div> 
+    <div name="Title" class="svelte-1h0ucju">Please Login</div> 
 
-    			attr(div7, "class", "LoginDialog svelte-2aqix3");
+    <input name="EMailAddressInput" type="email" required="" placeholder="your email address" class="svelte-1h0ucju"/> 
+    <div class="FormMessage"> </div> 
+
+    <input name="PasswordInput" type="password" required="" minlength="10" placeholder="your password" class="svelte-1h0ucju"/> 
+    <div class="FormMessage"> </div> 
+
+    <div name="ForgottenPassword" class="svelte-1h0ucju"><a href="" class="svelte-1h0ucju">Forgot your password?</a></div> 
+
+    <button name="LoginButton" class="svelte-1h0ucju">Login</button> 
+
+    <div style="text-align:center">Don&#39;t have an account? <a href="" class="svelte-1h0ucju">Create one!</a></div></div>`;
+
+    			attr(div7, "class", "Dialog svelte-1h0ucju");
     		},
     		m(target, anchor) {
     			insert(target, div7, anchor);
