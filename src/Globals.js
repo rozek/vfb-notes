@@ -9,7 +9,8 @@
     EMailAddress:      localStorage['vfb-notes: email-address']  || '',
     Password:          sessionStorage['vfb-notes: password']     || '',
     loggedIn:          false,
-    State:             ''
+    State:             '',
+    FailureReason:     ''
   })
 
   function define (KeyOrObject, Value) {
