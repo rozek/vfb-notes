@@ -1022,6 +1022,9 @@ var app = (function () {
         if (Quote === void 0) { Quote = '"'; }
         return Quote + quotable(Text, Quote) + Quote;
     }
+
+    //----------------------------------------------------------------------------//
+    /**** VoltCloud-specific types and constants ****/
     var ApplicationNamePattern = /^([a-z0-9]|[a-z0-9][-a-z0-9]*[a-z0-9])$/; // dto.
     var maxApplicationNameLength = 63; // see discussion forum
     var maxStorageKeyLength = 255; // as mentioned in REST API docs
@@ -1239,7 +1242,7 @@ var app = (function () {
                                 var ContentType, ErrorDetails;
                                 return __generator(this, function (_a) {
                                     if (Request.status === 401) {
-                                        if (firstAttempt) { // try to "refresh" the access token
+                                        if (firstAttempt && (Mode !== 'public')) { // try to "refresh" the access token
                                             return [2 /*return*/, (activeDeveloperAddress != null // also catches login failures
                                                     ? loginDeveloper(activeDeveloperAddress, activeDeveloperPassword, false)
                                                     : loginCustomer(activeCustomerAddress, activeCustomerPassword, false))
@@ -1251,7 +1254,7 @@ var app = (function () {
                                                     .catch(function (Signal) { return reject(Signal); })];
                                         }
                                         else {
-                                            return [2 /*return*/, reject(namedError('AuthorizationFailure: VoltCloud request could not be authorized'))];
+                                            return [2 /*return*/, reject(namedError('AuthorizationFailure: VoltCloud request could not be authorized', { HTTPStatus: Request.status }))];
                                         }
                                     }
                                     ContentType = Request.getResponseHeader('content-type') || '';
@@ -1681,7 +1684,7 @@ var app = (function () {
     				} else {
     					Globals.define({
     						State: 'CommunicationFailure',
-    						FailureReason: Signal.message
+    						FailureReason: SignaltoString()
     					});
     				}
 
