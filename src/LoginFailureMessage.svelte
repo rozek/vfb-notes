@@ -43,7 +43,7 @@
   }
 
   .Dialog > div > .Block {
-    display:block; margin:10px;
+    display:block; margin:0px 0px 10px 0px;
     text-align:justify;
   }
 
@@ -119,7 +119,7 @@
 
     <div class="Block">
       If you forgot your password, you may ask for a
-      <a href="#/" on:click={showPasswordReset}>password reset</a>!
+      <a href="#/" on:click={showPasswordReset}>password reset</a>
     </div>
 
     <button on:click={closeMessage}>Ok</button>
