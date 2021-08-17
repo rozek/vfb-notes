@@ -15,6 +15,7 @@
   import LoggingInDisplay            from './LoggingInDisplay.svelte'
   import LoginFailureDisplay         from './LoginFailureDisplay.svelte'
   import ResetRequestDialog          from './ResetRequestDialog.svelte'
+  import ResetRequestSuccessDisplay  from './ResetRequestSuccessDisplay.svelte'
   import CommunicationFailureDisplay from './CommunicationFailureDisplay.svelte'
 </script>
 
@@ -38,6 +39,8 @@
   window.addEventListener(
     'hashchange', () => { SubPath = document.location.hash }
   )
+
+Globals.define('State','ResetRequest')
 </script>
 
 <ApplicationCell>
@@ -49,10 +52,11 @@
       <LegalPage/>
     {:else}
       <InfoPage>
-        {#if $Globals.State === 'Login'}       <Overlay><LoginDialog/></Overlay>{/if}
-        {#if $Globals.State === 'loggingIn'}   <Overlay><LoggingInDisplay/></Overlay>{/if}
-        {#if $Globals.State === 'LoginFailure'}<Overlay><LoginFailureDisplay/></Overlay>{/if}
-        {#if $Globals.State === 'ResetRequest'}<Overlay><ResetRequestDialog/></Overlay>{/if}
+        {#if $Globals.State === 'Login'}         <Overlay><LoginDialog/></Overlay>{/if}
+        {#if $Globals.State === 'loggingIn'}     <Overlay><LoggingInDisplay/></Overlay>{/if}
+        {#if $Globals.State === 'LoginFailure'}  <Overlay><LoginFailureDisplay/></Overlay>{/if}
+        {#if $Globals.State === 'ResetRequest'}  <Overlay><ResetRequestDialog/></Overlay>{/if}
+        {#if $Globals.State === 'ResetRequested'}<Overlay><ResetRequestSuccessDisplay/></Overlay>{/if}
         {#if $Globals.State === 'CommunicationFailure'}<Overlay><CommunicationFailureDisplay/></Overlay>{/if}
       </InfoPage>
     {/if}
