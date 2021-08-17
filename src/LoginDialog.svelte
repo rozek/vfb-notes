@@ -87,6 +87,11 @@
 
 <script context="module" lang="ts">
   import { ValueIsEMailAddress } from 'javascript-interface-library'
+
+  import {
+    focusOnApplication, actOnBehalfOfCustomer
+  } from 'voltcloud-for-browsers'
+
   import { Globals } from './Globals.js'
 </script>
 
@@ -148,6 +153,11 @@
   async function doLogin (Event) {
     Event.preventDefault()
     Globals.define({ State:'LoggingIn', EMailAddress, Password })
+
+    await focusOnApplication($Globals.ApplicationURL,$Globals.ApplicationId)
+    await actOnBehalfOfCustomer(EMailAddress,Password)
+
+    Globals.define({ loggedIn:true, State:'' })
   }
 </script>
 
