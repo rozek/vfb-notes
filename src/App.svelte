@@ -23,18 +23,14 @@
       Globals.define('ResetToken',       completeURL.replace(/^.*\/\#\/reset\//,''))
   }
 
-  Globals.define({
-    AccessToken: sessionStorage['vfb-notes: access-token'],
-    EMailAddress:  localStorage['vfb-notes: email-address'],
-    Password:    sessionStorage['vfb-notes: password']
-  })
-
   switch (true) {
-    case ($Globals.ConfirmationToken != null):
+    case ($Globals.ConfirmationToken !== ''):
       Globals.define('State','UserConfirmation'); break
-    case ($Globals.ConfirmationToken != null):
-      Globals.define('ResetToken','PasswordReset'); break
+    case ($Globals.ConfirmationToken !== ''):
+      Globals.define('State','PasswordReset'); break
   }
+
+Globals.define('State','Login')
 
   let SubPath = document.location.hash
   window.addEventListener(
@@ -43,7 +39,7 @@
 </script>
 
 <ApplicationCell>
-  {#if $Globals.AccessToken == null}
+  {#if $Globals.AccessToken === ''}
     {#if SubPath === '#/Legal'}
       <LegalPage/>
     {:else}
