@@ -5,14 +5,15 @@
 </style>
 
 <script context="module" lang="ts">
-  import { Globals }     from './Globals.js'
-  import ApplicationCell from './ApplicationCell.svelte'
-  import InfoPage        from './InfoPage.svelte'
-  import LegalPage       from './LegalPage.svelte'
-  import NotePage        from './NotePage.svelte'
-  import Overlay         from './Overlay.svelte'
-  import LoginDialog     from './LoginDialog.svelte'
-  import LoginMessage    from './LoginMessage.svelte'
+  import { Globals }         from './Globals.js'
+  import ApplicationCell     from './ApplicationCell.svelte'
+  import InfoPage            from './InfoPage.svelte'
+  import LegalPage           from './LegalPage.svelte'
+  import NotePage            from './NotePage.svelte'
+  import Overlay             from './Overlay.svelte'
+  import LoginDialog         from './LoginDialog.svelte'
+  import LoggingInMessage    from './LoggingInMessage.svelte'
+  import LoginFailureMessage from './LoginFailureMessage.svelte'
 </script>
 
 <script lang="ts">
@@ -31,7 +32,7 @@
       Globals.define('State','PasswordReset'); break
   }
 
-Globals.define('State','Login')
+Globals.define('State','LoginFailure')
 
   let SubPath = document.location.hash
   window.addEventListener(
@@ -48,8 +49,9 @@ Globals.define('State','Login')
       <LegalPage/>
     {:else}
       <InfoPage>
-        {#if $Globals.State === 'Login'}    <Overlay><LoginDialog/></Overlay>{/if}
-        {#if $Globals.State === 'LoggingIn'}<Overlay><LoginMessage/></Overlay>{/if}
+        {#if $Globals.State === 'Login'}       <Overlay><LoginDialog/></Overlay>{/if}
+        {#if $Globals.State === 'LoggingIn'}   <Overlay><LoggingInMessage/></Overlay>{/if}
+        {#if $Globals.State === 'LoginFailure'}<Overlay><LoginFailureMessage/></Overlay>{/if}
       </InfoPage>
     {/if}
   {/if}
