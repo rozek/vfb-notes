@@ -96,7 +96,7 @@
       text notes from their smartphones (or tablets, desktops or notebooks)
     </div>
     <div class="Block">
-      This "service" is free of charge and offered on a "best-effort" basis.
+      This "service" is provided free of charge on a "best-effort" basis.
     </div>
     <div class="Block">
       Please, consider the <a href="#/" on:click={showLegal}>Data Privacy
