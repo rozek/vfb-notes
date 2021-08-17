@@ -609,6 +609,7 @@ var app = (function () {
     	let t8;
     	let a1;
     	let t10;
+    	let t11;
     	let button;
     	let mounted;
     	let dispose;
@@ -633,7 +634,8 @@ var app = (function () {
     			t8 = text("If you forgot your password, you may ask for a\n      ");
     			a1 = element("a");
     			a1.textContent = "password reset";
-    			t10 = space();
+    			t10 = text(".");
+    			t11 = space();
     			button = element("button");
     			button.textContent = "Ok";
     			attr(div0, "name", "Title");
@@ -664,7 +666,8 @@ var app = (function () {
     			append(div4, div3);
     			append(div3, t8);
     			append(div3, a1);
-    			append(div4, t10);
+    			append(div3, t10);
+    			append(div4, t11);
     			append(div4, button);
 
     			if (!mounted) {
@@ -1684,7 +1687,7 @@ var app = (function () {
     				} else {
     					Globals.define({
     						State: 'CommunicationFailure',
-    						FailureReason: SignaltoString()
+    						FailureReason: Signal.toString()
     					});
     				}
 
