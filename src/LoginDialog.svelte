@@ -42,6 +42,11 @@
     color:#222222;
   }
 
+  .Dialog > div > .Block {
+    display:block; margin:0px 0px 10px 0px;
+    text-align:justify;
+  }
+
   .Dialog > div > input {
     appearance:none; -webkit-appearance:none; -moz-appearance:none; -o-appearance:none;
     display:block; position:relative;
@@ -154,8 +159,17 @@
     Event.preventDefault()
     Globals.define({ State:'LoggingIn', EMailAddress, Password })
 
-    await focusOnApplication($Globals.ApplicationURL,$Globals.ApplicationId)
-    await actOnBehalfOfCustomer(EMailAddress,Password)
+    try {
+      await focusOnApplication($Globals.ApplicationURL,$Globals.ApplicationId)
+      await actOnBehalfOfCustomer(EMailAddress,Password)
+    } catch (Signal) {
+      if (Signal.name === 'LoginFailed') {
+        Globals.define('State','LoginFailure')
+      } else {
+        Globals.define({ State:'CommunicationFailure', FailureReason:Signal.message })
+      }
+      return
+    }
 
     Globals.define({ loggedIn:true, State:'' })
   }
