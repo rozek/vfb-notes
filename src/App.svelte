@@ -12,9 +12,10 @@
   import NotePage                    from './NotePage.svelte'
   import Overlay                     from './Overlay.svelte'
   import LoginDialog                 from './LoginDialog.svelte'
-  import LoggingInMessage            from './LoggingInMessage.svelte'
-  import LoginFailureMessage         from './LoginFailureMessage.svelte'
-  import CommunicationFailureMessage from './CommunicationFailureMessage.svelte'
+  import LoggingInDisplay            from './LoggingInDisplay.svelte'
+  import LoginFailureDisplay         from './LoginFailureDisplay.svelte'
+  import ResetRequestDialog          from './ResetRequestDialog.svelte'
+  import CommunicationFailureDisplay from './CommunicationFailureDisplay.svelte'
 </script>
 
 <script lang="ts">
@@ -49,9 +50,10 @@
     {:else}
       <InfoPage>
         {#if $Globals.State === 'Login'}       <Overlay><LoginDialog/></Overlay>{/if}
-        {#if $Globals.State === 'LoggingIn'}   <Overlay><LoggingInMessage/></Overlay>{/if}
-        {#if $Globals.State === 'LoginFailure'}<Overlay><LoginFailureMessage/></Overlay>{/if}
-        {#if $Globals.State === 'CommunicationFailure'}<Overlay><CommunicationFailureMessage/></Overlay>{/if}
+        {#if $Globals.State === 'loggingIn'}   <Overlay><LoggingInDisplay/></Overlay>{/if}
+        {#if $Globals.State === 'LoginFailure'}<Overlay><LoginFailureDisplay/></Overlay>{/if}
+        {#if $Globals.State === 'ResetRequest'}<Overlay><ResetRequestDialog/></Overlay>{/if}
+        {#if $Globals.State === 'CommunicationFailure'}<Overlay><CommunicationFailureDisplay/></Overlay>{/if}
       </InfoPage>
     {/if}
   {/if}
