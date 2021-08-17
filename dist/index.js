@@ -529,9 +529,10 @@ var app = (function () {
     			attr(div0, "class", "svelte-1gne4st");
     			attr(div1, "class", "Block svelte-1gne4st");
     			attr(div2, "class", "Block svelte-1gne4st");
+    			set_style(div2, "margin", "0px 10px 10px 10px");
     			set_style(div2, "font-size", "12px");
     			set_style(div2, "font-style", "italic");
-    			set_style(div2, "color", "red");
+    			set_style(div2, "color", "red\n    ");
     			attr(div3, "class", "Block svelte-1gne4st");
     			attr(button, "class", "svelte-1gne4st");
     			attr(div4, "class", "svelte-1gne4st");
@@ -1427,7 +1428,7 @@ var app = (function () {
         return Math.max(Minimum, Math.min(Value, Maximum));
     }
 
-    var css_248z$5 = ".Dialog.svelte-33io0j.svelte-33io0j.svelte-33io0j{display:inline-block;flex:0 0 auto;position:relative;width:300px;height:auto;margin:0px;margin-top:-20px;border:none;border-radius:8px;padding:10px;box-shadow:0px 0px 5px 5px rgba(0,0,0,0.2);background-color:white}.Dialog.svelte-33io0j a.svelte-33io0j.svelte-33io0j,.Dialog.svelte-33io0j a.svelte-33io0j.svelte-33io0j:visited{color:#2980B9;text-decoration:underline}.Dialog.svelte-33io0j>div.svelte-33io0j.svelte-33io0j{display:flex;position:relative;flex-flow:column nowrap;align-items:stretch;border:solid 2px lightgray;border-radius:4px;padding:10px}.Dialog.svelte-33io0j>div.svelte-33io0j>[name=\"CloseButton\"].svelte-33io0j{display:block;position:absolute;top:-20px;right:-20px;width:20px;height:20px;border:solid 2px white;border-radius:50%;box-shadow:0px 0px 5px 5px rgba(0,0,0,0.2), 0px 0px 0px 1px lightgray;background-color:black;padding:0px;font-size:18px;font-weight:bold;line-height:12px;text-align:center;color:white;cursor:pointer}.Dialog.svelte-33io0j>div.svelte-33io0j>[name=\"Title\"].svelte-33io0j{display:block;position:relative;padding:4px 0px 14px 0px;font-size:18px;font-weight:bold;text-align:center;color:#222222}.Dialog.svelte-33io0j>div.svelte-33io0j>input.svelte-33io0j{appearance:none;-webkit-appearance:none;-moz-appearance:none;-o-appearance:none;display:block;position:relative;margin:4px 0px 4px 0px;padding:4px;border:solid 1px lightgray;border-radius:2px;font-size:16px}.Dialog.svelte-33io0j>div.svelte-33io0j>button.svelte-33io0j{appearance:none;-webkit-appearance:none;-moz-appearance:none;-o-appearance:none;display:block;position:relative;margin:4px 0px 4px 0px;padding:6px;background-color:#2980B9;border:none;border-radius:4px;font-size:16px;font-weight:bold;color:white;cursor:pointer}.Dialog.svelte-33io0j>div.svelte-33io0j>button.svelte-33io0j:disabled{opacity:0.3;cursor:auto}.Dialog.svelte-33io0j>div.svelte-33io0j>.FormMessage.svelte-33io0j{display:inline-block;position:relative;left:2px;top:-2px;font-size:12px\n  }.Dialog.svelte-33io0j>div.svelte-33io0j>.invalid.FormMessage.svelte-33io0j{color:red}.Dialog.svelte-33io0j>div.svelte-33io0j>[name=\"ForgottenPassword\"].svelte-33io0j{display:block;position:relative;padding:10px 0px 10px 0px;text-align:right}";
+    var css_248z$5 = ".Dialog.svelte-gr5y99.svelte-gr5y99.svelte-gr5y99{display:inline-block;flex:0 0 auto;position:relative;width:300px;height:auto;margin:0px;margin-top:-20px;border:none;border-radius:8px;padding:10px;box-shadow:0px 0px 5px 5px rgba(0,0,0,0.2);background-color:white}.Dialog.svelte-gr5y99 a.svelte-gr5y99.svelte-gr5y99,.Dialog.svelte-gr5y99 a.svelte-gr5y99.svelte-gr5y99:visited{color:#2980B9;text-decoration:underline}.Dialog.svelte-gr5y99>div.svelte-gr5y99.svelte-gr5y99{display:flex;position:relative;flex-flow:column nowrap;align-items:stretch;border:solid 2px lightgray;border-radius:4px;padding:10px}.Dialog.svelte-gr5y99>div.svelte-gr5y99>[name=\"CloseButton\"].svelte-gr5y99{display:block;position:absolute;top:-20px;right:-20px;width:20px;height:20px;border:solid 2px white;border-radius:50%;box-shadow:0px 0px 5px 5px rgba(0,0,0,0.2), 0px 0px 0px 1px lightgray;background-color:black;padding:0px;font-size:18px;font-weight:bold;line-height:12px;text-align:center;color:white;cursor:pointer}.Dialog.svelte-gr5y99>div.svelte-gr5y99>[name=\"Title\"].svelte-gr5y99{display:block;position:relative;padding:4px 0px 14px 0px;font-size:18px;font-weight:bold;text-align:center;color:#222222}.Dialog.svelte-gr5y99>div.svelte-gr5y99>input.svelte-gr5y99{appearance:none;-webkit-appearance:none;-moz-appearance:none;-o-appearance:none;display:block;position:relative;margin:4px 0px 4px 0px;padding:4px;border:solid 1px lightgray;border-radius:2px;font-size:16px}.Dialog.svelte-gr5y99>div.svelte-gr5y99>button.svelte-gr5y99{appearance:none;-webkit-appearance:none;-moz-appearance:none;-o-appearance:none;display:block;position:relative;margin:4px 0px 4px 0px;padding:6px;background-color:#2980B9;border:none;border-radius:4px;font-size:16px;font-weight:bold;color:white;cursor:pointer}.Dialog.svelte-gr5y99>div.svelte-gr5y99>button.svelte-gr5y99:disabled{opacity:0.3;cursor:auto}.Dialog.svelte-gr5y99>div.svelte-gr5y99>.FormMessage.svelte-gr5y99{display:inline-block;position:relative;left:2px;top:-2px;font-size:12px\n  }.Dialog.svelte-gr5y99>div.svelte-gr5y99>.invalid.FormMessage.svelte-gr5y99{color:red}.Dialog.svelte-gr5y99>div.svelte-gr5y99>[name=\"ForgottenPassword\"].svelte-gr5y99{display:block;position:relative;padding:10px 0px 10px 0px;text-align:right}";
     styleInject(css_248z$5,{"insertAt":"top"});
 
     /* src/LoginDialog.svelte generated by Svelte v3.42.1 */
@@ -1493,35 +1494,35 @@ var app = (function () {
     			a1 = element("a");
     			a1.textContent = "Create one!";
     			attr(div0, "name", "CloseButton");
-    			attr(div0, "class", "svelte-33io0j");
+    			attr(div0, "class", "svelte-gr5y99");
     			attr(div1, "name", "Title");
-    			attr(div1, "class", "svelte-33io0j");
+    			attr(div1, "class", "svelte-gr5y99");
     			attr(input0, "name", "EMailAddressInput");
     			attr(input0, "type", "email");
     			attr(input0, "placeholder", "your email address");
-    			attr(input0, "class", "svelte-33io0j");
-    			attr(div2, "class", "svelte-33io0j");
+    			attr(input0, "class", "svelte-gr5y99");
+    			attr(div2, "class", "svelte-gr5y99");
     			toggle_class(div2, "FormMessage", true);
     			toggle_class(div2, "invalid", /*AddressLooksBad*/ ctx[1]);
     			attr(input1, "name", "PasswordInput");
     			attr(input1, "type", "password");
     			attr(input1, "placeholder", "your password");
-    			attr(input1, "class", "svelte-33io0j");
-    			attr(div3, "class", "svelte-33io0j");
+    			attr(input1, "class", "svelte-gr5y99");
+    			attr(div3, "class", "svelte-gr5y99");
     			toggle_class(div3, "FormMessage", true);
     			toggle_class(div3, "invalid", /*PasswordLooksBad*/ ctx[3]);
     			attr(a0, "href", "#/");
-    			attr(a0, "class", "svelte-33io0j");
+    			attr(a0, "class", "svelte-gr5y99");
     			attr(div4, "name", "ForgottenPassword");
-    			attr(div4, "class", "svelte-33io0j");
+    			attr(div4, "class", "svelte-gr5y99");
     			attr(button, "name", "LoginButton");
     			button.disabled = /*LoginIsForbidden*/ ctx[6];
-    			attr(button, "class", "svelte-33io0j");
+    			attr(button, "class", "svelte-gr5y99");
     			attr(a1, "href", "#/");
-    			attr(a1, "class", "svelte-33io0j");
+    			attr(a1, "class", "svelte-gr5y99");
     			set_style(div5, "text-align", "center");
-    			attr(div6, "class", "svelte-33io0j");
-    			attr(div7, "class", "Dialog svelte-33io0j");
+    			attr(div6, "class", "svelte-gr5y99");
+    			attr(div7, "class", "Dialog svelte-gr5y99");
     		},
     		m(target, anchor) {
     			insert(target, div7, anchor);
@@ -1671,8 +1672,22 @@ var app = (function () {
     				Password
     			});
 
-    			yield focusOnApplication($Globals.ApplicationURL, $Globals.ApplicationId);
-    			yield actOnBehalfOfCustomer(EMailAddress, Password);
+    			try {
+    				yield focusOnApplication($Globals.ApplicationURL, $Globals.ApplicationId);
+    				yield actOnBehalfOfCustomer(EMailAddress, Password);
+    			} catch(Signal) {
+    				if (Signal.name === 'LoginFailed') {
+    					Globals.define('State', 'LoginFailure');
+    				} else {
+    					Globals.define({
+    						State: 'CommunicationFailure',
+    						FailureReason: Signal.message
+    					});
+    				}
+
+    				return;
+    			}
+
     			Globals.define({ loggedIn: true, State: '' });
     		});
     	}
@@ -2602,7 +2617,7 @@ var app = (function () {
     	};
     }
 
-    // (46:4) {#if SubPath === '#/Legal'}
+    // (45:4) {#if SubPath === '#/Legal'}
     function create_if_block_1(ctx) {
     	let legalpage;
     	let current;
@@ -2632,7 +2647,7 @@ var app = (function () {
     	};
     }
 
-    // (42:2) {#if $Globals.loggedIn}
+    // (41:2) {#if $Globals.loggedIn}
     function create_if_block(ctx) {
     	let notepage;
     	let current;
@@ -2662,7 +2677,7 @@ var app = (function () {
     	};
     }
 
-    // (50:8) {#if $Globals.State === 'Login'}
+    // (49:8) {#if $Globals.State === 'Login'}
     function create_if_block_5(ctx) {
     	let overlay;
     	let current;
@@ -2697,7 +2712,7 @@ var app = (function () {
     	};
     }
 
-    // (50:47) <Overlay>
+    // (49:47) <Overlay>
     function create_default_slot_5(ctx) {
     	let logindialog;
     	let current;
@@ -2726,7 +2741,7 @@ var app = (function () {
     	};
     }
 
-    // (51:8) {#if $Globals.State === 'LoggingIn'}
+    // (50:8) {#if $Globals.State === 'LoggingIn'}
     function create_if_block_4(ctx) {
     	let overlay;
     	let current;
@@ -2761,7 +2776,7 @@ var app = (function () {
     	};
     }
 
-    // (51:47) <Overlay>
+    // (50:47) <Overlay>
     function create_default_slot_4(ctx) {
     	let logginginmessage;
     	let current;
@@ -2790,7 +2805,7 @@ var app = (function () {
     	};
     }
 
-    // (52:8) {#if $Globals.State === 'LoginFailure'}
+    // (51:8) {#if $Globals.State === 'LoginFailure'}
     function create_if_block_3(ctx) {
     	let overlay;
     	let current;
@@ -2825,7 +2840,7 @@ var app = (function () {
     	};
     }
 
-    // (52:47) <Overlay>
+    // (51:47) <Overlay>
     function create_default_slot_3(ctx) {
     	let loginfailuremessage;
     	let current;
@@ -2854,7 +2869,7 @@ var app = (function () {
     	};
     }
 
-    // (53:8) {#if $Globals.State === 'CommunicationFailure'}
+    // (52:8) {#if $Globals.State === 'CommunicationFailure'}
     function create_if_block_2(ctx) {
     	let overlay;
     	let current;
@@ -2889,7 +2904,7 @@ var app = (function () {
     	};
     }
 
-    // (53:55) <Overlay>
+    // (52:55) <Overlay>
     function create_default_slot_2(ctx) {
     	let communicationfailuremessage;
     	let current;
@@ -2918,7 +2933,7 @@ var app = (function () {
     	};
     }
 
-    // (49:6) <InfoPage>
+    // (48:6) <InfoPage>
     function create_default_slot_1(ctx) {
     	let t0;
     	let t1;
@@ -3065,7 +3080,7 @@ var app = (function () {
     	};
     }
 
-    // (41:0) <ApplicationCell>
+    // (40:0) <ApplicationCell>
     function create_default_slot(ctx) {
     	let current_block_type_index;
     	let if_block;
@@ -3201,7 +3216,6 @@ var app = (function () {
     			break;
     	}
 
-    	Globals.define('State', 'LoginFailure');
     	let SubPath = document.location.hash;
 
     	window.addEventListener('hashchange', () => {
