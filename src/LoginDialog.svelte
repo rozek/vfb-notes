@@ -1,8 +1,8 @@
 <style>
   .Dialog {
-    display:inline-block; position:relative;
+    display:inline-block; flex:0 0 auto; position:relative;
     width:300px; height:auto;
-    margin:0px; margin-top:-10px;
+    margin:0px; margin-top:-20px;
     border:none; border-radius:8px;
     padding:10px;
     box-shadow:0px 0px 5px 5px rgba(0,0,0,0.2);
@@ -27,7 +27,7 @@
     border:solid 2px white; border-radius:50%;
     box-shadow:0px 0px 5px 5px rgba(0,0,0,0.2), 0px 0px 0px 1px lightgray;
     background-color:black;
-    padding:0px 0px 0px 1px;
+    padding:0px;
     font-size:18px; font-weight:bold; line-height:12px;
     text-align:center;
     color:white;
@@ -58,13 +58,17 @@
     font-size:16px; font-weight:bold; color:white;
   }
 
-  .Dialog > div.FormMessage {
+  .Dialog > div > button:disabled {
+    opacity:0.3;
+  }
+
+  .Dialog > div > .FormMessage {
     display:inline-block; position:relative;
     left:2px; top:-2px;
     font-size:12px
   }
 
-  .Dialog > div.FormMessage.invalid {
+  .Dialog > div > .invalid.FormMessage {
     color:red;
   }
 
@@ -78,23 +82,86 @@
 
 </style>
 
+<script context="module" lang="ts">
+  import { ValueIsEMailAddress } from 'javascript-interface-library'
+  import { Globals } from './Globals.js'
+</script>
+
+<script lang="ts">
+  let EMailAddress:string, AddressLooksBad:boolean,  AddressMessage:string
+  let Password:string,     PasswordLooksBad:boolean, PasswordMessage:string
+
+  EMailAddress = $Globals.EMailAddress || ''
+  Password     = ''
+
+  $: switch (true) {
+    case (EMailAddress.trim() === ''):
+      AddressLooksBad = true;  AddressMessage = 'please, enter your EMail address'
+      break
+    case ValueIsEMailAddress(EMailAddress):
+      AddressLooksBad = false; AddressMessage = 'your email address looks acceptable'
+      break
+    default:
+      AddressLooksBad = true;  AddressMessage = 'please, enter a valid EMail address'
+  }
+
+  $: switch (true) {
+    case (Password === ''):
+      PasswordLooksBad = true;  PasswordMessage = 'please, enter your password'
+      break
+    case (Password.length < 10):
+      PasswordLooksBad = true;  PasswordMessage = 'your password is too short'
+      break
+    case ! /[0-9]/.test(Password):
+      PasswordLooksBad = true;  PasswordMessage = 'your password lacks any digits'
+      break
+    case (Password.toLowerCase() === Password):
+      PasswordLooksBad = true;  PasswordMessage = 'your password lacks any uppercase characters'
+      break
+    case (Password.toUpperCase() === Password):
+      PasswordLooksBad = true;  PasswordMessage = 'your password lacks any lowercase characters'
+      break
+    default:
+      PasswordLooksBad = false; PasswordMessage = 'your password looks acceptable'
+  }
+
+  $: LoginIsForbidden = AddressLooksBad || PasswordLooksBad
+
+  function showRegistration (Event) {
+    Event.preventDefault()
+    Globals.define('State','Registration')
+  }
+
+  function showPasswordReset (Event) {
+    Event.preventDefault()
+    Globals.define('State','PasswordReset')
+  }
+
+  async function doLogin (Event) {
+    Event.preventDefault()
+    Globals.define({ State:'LoggingIn', EMailAddress, Password })
+  }
+</script>
+
 <div class="Dialog">
   <div>
     <div name="CloseButton">&times;</div>
-    <div name="Title">Please Login</div>
+    <div name="Title">Login</div>
 
-    <input name="EMailAddressInput" type="email" required placeholder="your email address">
-    <div class="FormMessage">&nbsp;</div>
+    <input name="EMailAddressInput" type="email" bind:value={EMailAddress}
+      placeholder="your email address">
+    <div class:FormMessage={true} class:invalid={AddressLooksBad}>{AddressMessage}</div>
 
-    <input name="PasswordInput" type="password" required minlength="10" placeholder="your password">
-    <div class="FormMessage">&nbsp;</div>
+    <input name="PasswordInput" type="password" bind:value={Password}
+      placeholder="your password">
+    <div class:FormMessage={true} class:invalid={PasswordLooksBad}>{PasswordMessage}</div>
 
-    <div name="ForgottenPassword"><a href="">Forgot your password?</a></div>
+    <div name="ForgottenPassword"><a href="#/" on:click={showPasswordReset}>Forgot your password?</a></div>
 
-    <button name="LoginButton">Login</button>
+    <button name="LoginButton" disabled={LoginIsForbidden} on:click={doLogin}>Login</button>
 
     <div style="text-align:center">
-      Don't have an account? <a href="">Create one!</a>
+      Don't have an account? <a href="#/" on:click={showRegistration}>Create one!</a>
     </div>
   </div>
 </div>
