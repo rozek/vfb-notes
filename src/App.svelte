@@ -33,8 +33,6 @@
       Globals.define('State','PasswordReset'); break
   }
 
-Globals.define('State','LoginFailure')
-
   let SubPath = document.location.hash
   window.addEventListener(
     'hashchange', () => { SubPath = document.location.hash }
