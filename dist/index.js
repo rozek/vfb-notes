@@ -540,35 +540,35 @@ var app = (function () {
     			a1 = element("a");
     			a1.textContent = "Create one!";
     			attr(div0, "name", "CloseButton");
-    			attr(div0, "class", "svelte-1gcgodr");
+    			attr(div0, "class", "svelte-33io0j");
     			attr(div1, "name", "Title");
-    			attr(div1, "class", "svelte-1gcgodr");
+    			attr(div1, "class", "svelte-33io0j");
     			attr(input0, "name", "EMailAddressInput");
     			attr(input0, "type", "email");
     			attr(input0, "placeholder", "your email address");
-    			attr(input0, "class", "svelte-1gcgodr");
-    			attr(div2, "class", "svelte-1gcgodr");
+    			attr(input0, "class", "svelte-33io0j");
+    			attr(div2, "class", "svelte-33io0j");
     			toggle_class(div2, "FormMessage", true);
     			toggle_class(div2, "invalid", /*AddressLooksBad*/ ctx[1]);
     			attr(input1, "name", "PasswordInput");
     			attr(input1, "type", "password");
     			attr(input1, "placeholder", "your password");
-    			attr(input1, "class", "svelte-1gcgodr");
-    			attr(div3, "class", "svelte-1gcgodr");
+    			attr(input1, "class", "svelte-33io0j");
+    			attr(div3, "class", "svelte-33io0j");
     			toggle_class(div3, "FormMessage", true);
     			toggle_class(div3, "invalid", /*PasswordLooksBad*/ ctx[3]);
     			attr(a0, "href", "#/");
-    			attr(a0, "class", "svelte-1gcgodr");
+    			attr(a0, "class", "svelte-33io0j");
     			attr(div4, "name", "ForgottenPassword");
-    			attr(div4, "class", "svelte-1gcgodr");
+    			attr(div4, "class", "svelte-33io0j");
     			attr(button, "name", "LoginButton");
     			button.disabled = /*LoginIsForbidden*/ ctx[6];
-    			attr(button, "class", "svelte-1gcgodr");
+    			attr(button, "class", "svelte-33io0j");
     			attr(a1, "href", "#/");
-    			attr(a1, "class", "svelte-1gcgodr");
+    			attr(a1, "class", "svelte-33io0j");
     			set_style(div5, "text-align", "center");
-    			attr(div6, "class", "svelte-1gcgodr");
-    			attr(div7, "class", "Dialog svelte-1gcgodr");
+    			attr(div6, "class", "svelte-33io0j");
+    			attr(div7, "class", "Dialog svelte-33io0j");
     		},
     		m(target, anchor) {
     			insert(target, div7, anchor);
@@ -601,6 +601,7 @@ var app = (function () {
 
     			if (!mounted) {
     				dispose = [
+    					listen(div0, "click", closeDialog),
     					listen(input0, "input", /*input0_input_handler*/ ctx[8]),
     					listen(input1, "input", /*input1_input_handler*/ ctx[9]),
     					listen(a0, "click", showPasswordReset),
@@ -644,6 +645,11 @@ var app = (function () {
     			run_all(dispose);
     		}
     	};
+    }
+
+    function closeDialog(Event) {
+    	Event.preventDefault();
+    	Globals.define('State', '');
     }
 
     function showRegistration(Event) {
@@ -1147,7 +1153,7 @@ var app = (function () {
     			div8.textContent = "The service this application provides is, on the other hand, rather\n      trivial: registered users will be able to edit a single page of online\n      text notes from their smartphones (or tablets, desktops or notebooks)";
     			t20 = space();
     			div9 = element("div");
-    			div9.textContent = "This \"service\" is free of charge and offered on a \"best-effort\" service.";
+    			div9.textContent = "This \"service\" is free of charge and offered on a \"best-effort\" basis.";
     			t22 = space();
     			div10 = element("div");
     			t23 = text("Please, consider the ");
