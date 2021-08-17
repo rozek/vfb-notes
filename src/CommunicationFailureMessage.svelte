@@ -103,7 +103,9 @@
       failed for the following reason:
     </div>
 
-    <div class="Block" style="font-size:12px; font-style:italic; color:red">
+    <div class="Block" style="
+      margin:0px 10px 10px 10px; font-size:12px; font-style:italic; color:red
+    ">
       {$Globals.FailureReason}
     </div>
 
