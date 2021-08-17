@@ -5,9 +5,9 @@ import commonjs       from '@rollup/plugin-commonjs'
 import resolve        from '@rollup/plugin-node-resolve'
 import autoPreprocess from 'svelte-preprocess'
 import typescript     from '@rollup/plugin-typescript'
+import postcss        from 'rollup-plugin-postcss'
 import livereload     from 'rollup-plugin-livereload'
 import { terser }     from 'rollup-plugin-terser'
-import css            from "rollup-plugin-css-only"
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -44,9 +44,8 @@ export default {
       autoPreprocess({ aliases:[['ts','typescript']] }),
     ]}),
 
-    css({ output:"index.css" }),
-
     resolve({ browser:true, dedupe:['svelte'] }), commonjs(), typescript(),
+    postcss({ extract:false, inject:{insertAt:'top'} }),
 
     ! production && serve(),
     ! production && livereload('./dist'),
