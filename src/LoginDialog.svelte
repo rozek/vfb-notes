@@ -31,6 +31,7 @@
     font-size:18px; font-weight:bold; line-height:12px;
     text-align:center;
     color:white;
+    cursor:pointer;
   }
 
   .Dialog > div > [name="Title"] {
@@ -56,10 +57,12 @@
     background-color:#2980B9;
     border:none; border-radius:4px;
     font-size:16px; font-weight:bold; color:white;
+    cursor:pointer;
   }
 
   .Dialog > div > button:disabled {
     opacity:0.3;
+    cursor:auto;
   }
 
   .Dialog > div > .FormMessage {
@@ -127,6 +130,11 @@
 
   $: LoginIsForbidden = AddressLooksBad || PasswordLooksBad
 
+  function closeDialog (Event) {
+    Event.preventDefault()
+    Globals.define('State','')
+  }
+
   function showRegistration (Event) {
     Event.preventDefault()
     Globals.define('State','Registration')
@@ -145,7 +153,7 @@
 
 <div class="Dialog">
   <div>
-    <div name="CloseButton">&times;</div>
+    <div name="CloseButton" on:click={closeDialog}>&times;</div>
     <div name="Title">Login</div>
 
     <input name="EMailAddressInput" type="email" bind:value={EMailAddress}
