@@ -5,15 +5,16 @@
 </style>
 
 <script context="module" lang="ts">
-  import { Globals }         from './Globals.js'
-  import ApplicationCell     from './ApplicationCell.svelte'
-  import InfoPage            from './InfoPage.svelte'
-  import LegalPage           from './LegalPage.svelte'
-  import NotePage            from './NotePage.svelte'
-  import Overlay             from './Overlay.svelte'
-  import LoginDialog         from './LoginDialog.svelte'
-  import LoggingInMessage    from './LoggingInMessage.svelte'
-  import LoginFailureMessage from './LoginFailureMessage.svelte'
+  import { Globals }                 from './Globals.js'
+  import ApplicationCell             from './ApplicationCell.svelte'
+  import InfoPage                    from './InfoPage.svelte'
+  import LegalPage                   from './LegalPage.svelte'
+  import NotePage                    from './NotePage.svelte'
+  import Overlay                     from './Overlay.svelte'
+  import LoginDialog                 from './LoginDialog.svelte'
+  import LoggingInMessage            from './LoggingInMessage.svelte'
+  import LoginFailureMessage         from './LoginFailureMessage.svelte'
+  import CommunicationFailureMessage from './CommunicationFailureMessage.svelte'
 </script>
 
 <script lang="ts">
@@ -52,6 +53,7 @@ Globals.define('State','LoginFailure')
         {#if $Globals.State === 'Login'}       <Overlay><LoginDialog/></Overlay>{/if}
         {#if $Globals.State === 'LoggingIn'}   <Overlay><LoggingInMessage/></Overlay>{/if}
         {#if $Globals.State === 'LoginFailure'}<Overlay><LoginFailureMessage/></Overlay>{/if}
+        {#if $Globals.State === 'CommunicationFailure'}<Overlay><CommunicationFailureMessage/></Overlay>{/if}
       </InfoPage>
     {/if}
   {/if}
