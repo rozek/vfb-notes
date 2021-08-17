@@ -118,6 +118,14 @@ var app = (function () {
     function children(element) {
         return Array.from(element.childNodes);
     }
+    function set_data(text, data) {
+        data = '' + data;
+        if (text.wholeText !== data)
+            text.data = data;
+    }
+    function set_input_value(input, value) {
+        input.value = value == null ? '' : value;
+    }
     function set_style(node, key, value, important) {
         node.style.setProperty(key, value, important ? 'important' : '');
     }
@@ -359,48 +367,431 @@ var app = (function () {
         }
     }
 
+    const subscriber_queue = [];
+    /**
+     * Create a `Writable` store that allows both updating and reading by subscription.
+     * @param {*=}value initial value
+     * @param {StartStopNotifier=}start start and stop notifications for subscriptions
+     */
+    function writable(value, start = noop) {
+        let stop;
+        const subscribers = new Set();
+        function set(new_value) {
+            if (safe_not_equal(value, new_value)) {
+                value = new_value;
+                if (stop) { // store is ready
+                    const run_queue = !subscriber_queue.length;
+                    for (const subscriber of subscribers) {
+                        subscriber[1]();
+                        subscriber_queue.push(subscriber, value);
+                    }
+                    if (run_queue) {
+                        for (let i = 0; i < subscriber_queue.length; i += 2) {
+                            subscriber_queue[i][0](subscriber_queue[i + 1]);
+                        }
+                        subscriber_queue.length = 0;
+                    }
+                }
+            }
+        }
+        function update(fn) {
+            set(fn(value));
+        }
+        function subscribe(run, invalidate = noop) {
+            const subscriber = [run, invalidate];
+            subscribers.add(subscriber);
+            if (subscribers.size === 1) {
+                stop = start(set) || noop;
+            }
+            run(value);
+            return () => {
+                subscribers.delete(subscriber);
+                if (subscribers.size === 0) {
+                    stop();
+                    stop = null;
+                }
+            };
+        }
+        return { set, update, subscribe };
+    }
+
+    const { subscribe, set, update } = writable({
+        AccessToken:       undefined,
+        ConfirmationToken: undefined,
+        ResetToken:        undefined,
+        EMailAddress:      undefined,
+        Password:          undefined,
+        State:             undefined
+      });
+
+      function define (KeyOrObject, Value) {
+        if (typeof(KeyOrObject) === 'string') {
+          update((Globals) => { Globals[KeyOrObject] = Value; return Globals });
+          switch (KeyOrObject) {
+            case 'AccessToken': sessionStorage['vfb-notes: access-token']  = Value; break
+            case 'EMailAddress':  localStorage['vfb-notes: email-address'] = Value; break
+            case 'Password':    sessionStorage['vfb-notes: password']      = Value;
+          }
+        } else {
+          update((Globals) => Object.assign(Globals,KeyOrObject));
+
+          if ('AccessToken' in KeyOrObject) {
+            sessionStorage['vfb-notes: access-token'] = KeyOrObject['AccessToken'];
+          }
+
+          if ('EMailAddress' in KeyOrObject) {
+            localStorage['vfb-notes: email-address'] = KeyOrObject['EMailAddress'];
+          }
+
+          if ('Password' in KeyOrObject) {
+            sessionStorage['vfb-notes: password'] = KeyOrObject['Password'];
+          }
+        }
+      }
+
+      define({
+        AccessToken:       sessionStorage['vfb-notes: access-token'] || '',
+        ConfirmationToken: '',
+        ResetToken:        '',
+        EMailAddress:      localStorage['vfb-notes: email-address']  || '',
+        Password:          sessionStorage['vfb-notes: password']     || ''
+      });
+
+      const Globals = { subscribe, define };
+
+    //----------------------------------------------------------------------------//
+    /**** ValueIsStringMatching ****/
+    function ValueIsStringMatching(Value, Pattern) {
+        return ((typeof Value === 'string') || (Value instanceof String)) && Pattern.test(Value.valueOf());
+    }
+    /**** ValueIsEMailAddress ****/
+    var EMailAddressPattern = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
+    // see https://stackoverflow.com/questions/201323/how-to-validate-an-email-address-using-a-regular-expression
+    function ValueIsEMailAddress(Value) {
+        return ValueIsStringMatching(Value, EMailAddressPattern);
+    }
+    /**** constrained ****/
+    function constrained(Value, Minimum, Maximum) {
+        if (Minimum === void 0) { Minimum = -Infinity; }
+        if (Maximum === void 0) { Maximum = Infinity; }
+        return Math.max(Minimum, Math.min(Value, Maximum));
+    }
+
     /* src/LoginDialog.svelte generated by Svelte v3.42.1 */
 
     function create_fragment$6(ctx) {
     	let div7;
+    	let div6;
+    	let div0;
+    	let t1;
+    	let div1;
+    	let t3;
+    	let input0;
+    	let t4;
+    	let div2;
+    	let t5;
+    	let t6;
+    	let input1;
+    	let t7;
+    	let div3;
+    	let t8;
+    	let t9;
+    	let div4;
+    	let a0;
+    	let t11;
+    	let button;
+    	let t12;
+    	let t13;
+    	let div5;
+    	let t14;
+    	let a1;
+    	let mounted;
+    	let dispose;
 
     	return {
     		c() {
     			div7 = element("div");
-
-    			div7.innerHTML = `<div class="svelte-1h0ucju"><div name="CloseButton" class="svelte-1h0ucju">×</div> 
-    <div name="Title" class="svelte-1h0ucju">Please Login</div> 
-
-    <input name="EMailAddressInput" type="email" required="" placeholder="your email address" class="svelte-1h0ucju"/> 
-    <div class="FormMessage"> </div> 
-
-    <input name="PasswordInput" type="password" required="" minlength="10" placeholder="your password" class="svelte-1h0ucju"/> 
-    <div class="FormMessage"> </div> 
-
-    <div name="ForgottenPassword" class="svelte-1h0ucju"><a href="" class="svelte-1h0ucju">Forgot your password?</a></div> 
-
-    <button name="LoginButton" class="svelte-1h0ucju">Login</button> 
-
-    <div style="text-align:center">Don&#39;t have an account? <a href="" class="svelte-1h0ucju">Create one!</a></div></div>`;
-
-    			attr(div7, "class", "Dialog svelte-1h0ucju");
+    			div6 = element("div");
+    			div0 = element("div");
+    			div0.textContent = "×";
+    			t1 = space();
+    			div1 = element("div");
+    			div1.textContent = "Login";
+    			t3 = space();
+    			input0 = element("input");
+    			t4 = space();
+    			div2 = element("div");
+    			t5 = text(/*AddressMessage*/ ctx[4]);
+    			t6 = space();
+    			input1 = element("input");
+    			t7 = space();
+    			div3 = element("div");
+    			t8 = text(/*PasswordMessage*/ ctx[5]);
+    			t9 = space();
+    			div4 = element("div");
+    			a0 = element("a");
+    			a0.textContent = "Forgot your password?";
+    			t11 = space();
+    			button = element("button");
+    			t12 = text("Login");
+    			t13 = space();
+    			div5 = element("div");
+    			t14 = text("Don't have an account? ");
+    			a1 = element("a");
+    			a1.textContent = "Create one!";
+    			attr(div0, "name", "CloseButton");
+    			attr(div0, "class", "svelte-1gcgodr");
+    			attr(div1, "name", "Title");
+    			attr(div1, "class", "svelte-1gcgodr");
+    			attr(input0, "name", "EMailAddressInput");
+    			attr(input0, "type", "email");
+    			attr(input0, "placeholder", "your email address");
+    			attr(input0, "class", "svelte-1gcgodr");
+    			attr(div2, "class", "svelte-1gcgodr");
+    			toggle_class(div2, "FormMessage", true);
+    			toggle_class(div2, "invalid", /*AddressLooksBad*/ ctx[1]);
+    			attr(input1, "name", "PasswordInput");
+    			attr(input1, "type", "password");
+    			attr(input1, "placeholder", "your password");
+    			attr(input1, "class", "svelte-1gcgodr");
+    			attr(div3, "class", "svelte-1gcgodr");
+    			toggle_class(div3, "FormMessage", true);
+    			toggle_class(div3, "invalid", /*PasswordLooksBad*/ ctx[3]);
+    			attr(a0, "href", "#/");
+    			attr(a0, "class", "svelte-1gcgodr");
+    			attr(div4, "name", "ForgottenPassword");
+    			attr(div4, "class", "svelte-1gcgodr");
+    			attr(button, "name", "LoginButton");
+    			button.disabled = /*LoginIsForbidden*/ ctx[6];
+    			attr(button, "class", "svelte-1gcgodr");
+    			attr(a1, "href", "#/");
+    			attr(a1, "class", "svelte-1gcgodr");
+    			set_style(div5, "text-align", "center");
+    			attr(div6, "class", "svelte-1gcgodr");
+    			attr(div7, "class", "Dialog svelte-1gcgodr");
     		},
     		m(target, anchor) {
     			insert(target, div7, anchor);
+    			append(div7, div6);
+    			append(div6, div0);
+    			append(div6, t1);
+    			append(div6, div1);
+    			append(div6, t3);
+    			append(div6, input0);
+    			set_input_value(input0, /*EMailAddress*/ ctx[0]);
+    			append(div6, t4);
+    			append(div6, div2);
+    			append(div2, t5);
+    			append(div6, t6);
+    			append(div6, input1);
+    			set_input_value(input1, /*Password*/ ctx[2]);
+    			append(div6, t7);
+    			append(div6, div3);
+    			append(div3, t8);
+    			append(div6, t9);
+    			append(div6, div4);
+    			append(div4, a0);
+    			append(div6, t11);
+    			append(div6, button);
+    			append(button, t12);
+    			append(div6, t13);
+    			append(div6, div5);
+    			append(div5, t14);
+    			append(div5, a1);
+
+    			if (!mounted) {
+    				dispose = [
+    					listen(input0, "input", /*input0_input_handler*/ ctx[8]),
+    					listen(input1, "input", /*input1_input_handler*/ ctx[9]),
+    					listen(a0, "click", showPasswordReset),
+    					listen(button, "click", /*doLogin*/ ctx[7]),
+    					listen(a1, "click", showRegistration)
+    				];
+
+    				mounted = true;
+    			}
     		},
-    		p: noop,
+    		p(ctx, [dirty]) {
+    			if (dirty & /*EMailAddress*/ 1 && input0.value !== /*EMailAddress*/ ctx[0]) {
+    				set_input_value(input0, /*EMailAddress*/ ctx[0]);
+    			}
+
+    			if (dirty & /*AddressMessage*/ 16) set_data(t5, /*AddressMessage*/ ctx[4]);
+
+    			if (dirty & /*AddressLooksBad*/ 2) {
+    				toggle_class(div2, "invalid", /*AddressLooksBad*/ ctx[1]);
+    			}
+
+    			if (dirty & /*Password*/ 4 && input1.value !== /*Password*/ ctx[2]) {
+    				set_input_value(input1, /*Password*/ ctx[2]);
+    			}
+
+    			if (dirty & /*PasswordMessage*/ 32) set_data(t8, /*PasswordMessage*/ ctx[5]);
+
+    			if (dirty & /*PasswordLooksBad*/ 8) {
+    				toggle_class(div3, "invalid", /*PasswordLooksBad*/ ctx[3]);
+    			}
+
+    			if (dirty & /*LoginIsForbidden*/ 64) {
+    				button.disabled = /*LoginIsForbidden*/ ctx[6];
+    			}
+    		},
     		i: noop,
     		o: noop,
     		d(detaching) {
     			if (detaching) detach(div7);
+    			mounted = false;
+    			run_all(dispose);
     		}
     	};
+    }
+
+    function showRegistration(Event) {
+    	Event.preventDefault();
+    	Globals.define('State', 'Registration');
+    }
+
+    function showPasswordReset(Event) {
+    	Event.preventDefault();
+    	Globals.define('State', 'PasswordReset');
+    }
+
+    function instance$6($$self, $$props, $$invalidate) {
+    	let LoginIsForbidden;
+    	let $Globals;
+    	component_subscribe($$self, Globals, $$value => $$invalidate(10, $Globals = $$value));
+
+    	var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, generator) {
+    		function adopt(value) {
+    			return value instanceof P
+    			? value
+    			: new P(function (resolve) {
+    						resolve(value);
+    					});
+    		}
+
+    		return new (P || (P = Promise))(function (resolve, reject) {
+    				function fulfilled(value) {
+    					try {
+    						step(generator.next(value));
+    					} catch(e) {
+    						reject(e);
+    					}
+    				}
+
+    				function rejected(value) {
+    					try {
+    						step(generator["throw"](value));
+    					} catch(e) {
+    						reject(e);
+    					}
+    				}
+
+    				function step(result) {
+    					result.done
+    					? resolve(result.value)
+    					: adopt(result.value).then(fulfilled, rejected);
+    				}
+
+    				step((generator = generator.apply(thisArg, _arguments || [])).next());
+    			});
+    	};
+
+    	let EMailAddress, AddressLooksBad, AddressMessage;
+    	let Password, PasswordLooksBad, PasswordMessage;
+    	EMailAddress = $Globals.EMailAddress || '';
+    	Password = '';
+
+    	function doLogin(Event) {
+    		return __awaiter(this, void 0, void 0, function* () {
+    			Event.preventDefault();
+
+    			Globals.define({
+    				State: 'LoggingIn',
+    				EMailAddress,
+    				Password
+    			});
+    		});
+    	}
+
+    	function input0_input_handler() {
+    		EMailAddress = this.value;
+    		$$invalidate(0, EMailAddress);
+    	}
+
+    	function input1_input_handler() {
+    		Password = this.value;
+    		$$invalidate(2, Password);
+    	}
+
+    	$$self.$$.update = () => {
+    		if ($$self.$$.dirty & /*EMailAddress*/ 1) {
+    			switch (true) {
+    				case EMailAddress.trim() === '':
+    					$$invalidate(1, AddressLooksBad = true);
+    					$$invalidate(4, AddressMessage = 'please, enter your EMail address');
+    					break;
+    				case ValueIsEMailAddress(EMailAddress):
+    					$$invalidate(1, AddressLooksBad = false);
+    					$$invalidate(4, AddressMessage = 'your email address looks acceptable');
+    					break;
+    				default:
+    					$$invalidate(1, AddressLooksBad = true);
+    					$$invalidate(4, AddressMessage = 'please, enter a valid EMail address');
+    			}
+    		}
+
+    		if ($$self.$$.dirty & /*Password*/ 4) {
+    			switch (true) {
+    				case Password === '':
+    					$$invalidate(3, PasswordLooksBad = true);
+    					$$invalidate(5, PasswordMessage = 'please, enter your password');
+    					break;
+    				case Password.length < 10:
+    					$$invalidate(3, PasswordLooksBad = true);
+    					$$invalidate(5, PasswordMessage = 'your password is too short');
+    					break;
+    				case !(/[0-9]/).test(Password):
+    					$$invalidate(3, PasswordLooksBad = true);
+    					$$invalidate(5, PasswordMessage = 'your password lacks any digits');
+    					break;
+    				case Password.toLowerCase() === Password:
+    					$$invalidate(3, PasswordLooksBad = true);
+    					$$invalidate(5, PasswordMessage = 'your password lacks any uppercase characters');
+    					break;
+    				case Password.toUpperCase() === Password:
+    					$$invalidate(3, PasswordLooksBad = true);
+    					$$invalidate(5, PasswordMessage = 'your password lacks any lowercase characters');
+    					break;
+    				default:
+    					$$invalidate(3, PasswordLooksBad = false);
+    					$$invalidate(5, PasswordMessage = 'your password looks acceptable');
+    			}
+    		}
+
+    		if ($$self.$$.dirty & /*AddressLooksBad, PasswordLooksBad*/ 10) {
+    			$$invalidate(6, LoginIsForbidden = AddressLooksBad || PasswordLooksBad);
+    		}
+    	};
+
+    	return [
+    		EMailAddress,
+    		AddressLooksBad,
+    		Password,
+    		PasswordLooksBad,
+    		AddressMessage,
+    		PasswordMessage,
+    		LoginIsForbidden,
+    		doLogin,
+    		input0_input_handler,
+    		input1_input_handler
+    	];
     }
 
     class LoginDialog extends SvelteComponent {
     	constructor(options) {
     		super();
-    		init(this, options, null, create_fragment$6, safe_not_equal, {});
+    		init(this, options, instance$6, create_fragment$6, safe_not_equal, {});
     	}
     }
 
@@ -416,7 +807,7 @@ var app = (function () {
     		c() {
     			div = element("div");
     			if (default_slot) default_slot.c();
-    			attr(div, "class", "Overlay svelte-14tmgka");
+    			attr(div, "class", "Overlay svelte-1nu3ouw");
     		},
     		m(target, anchor) {
     			insert(target, div, anchor);
@@ -675,69 +1066,6 @@ var app = (function () {
     		init(this, options, instance$3, create_fragment$3, safe_not_equal, {});
     	}
     }
-
-    const subscriber_queue = [];
-    /**
-     * Create a `Writable` store that allows both updating and reading by subscription.
-     * @param {*=}value initial value
-     * @param {StartStopNotifier=}start start and stop notifications for subscriptions
-     */
-    function writable(value, start = noop) {
-        let stop;
-        const subscribers = new Set();
-        function set(new_value) {
-            if (safe_not_equal(value, new_value)) {
-                value = new_value;
-                if (stop) { // store is ready
-                    const run_queue = !subscriber_queue.length;
-                    for (const subscriber of subscribers) {
-                        subscriber[1]();
-                        subscriber_queue.push(subscriber, value);
-                    }
-                    if (run_queue) {
-                        for (let i = 0; i < subscriber_queue.length; i += 2) {
-                            subscriber_queue[i][0](subscriber_queue[i + 1]);
-                        }
-                        subscriber_queue.length = 0;
-                    }
-                }
-            }
-        }
-        function update(fn) {
-            set(fn(value));
-        }
-        function subscribe(run, invalidate = noop) {
-            const subscriber = [run, invalidate];
-            subscribers.add(subscriber);
-            if (subscribers.size === 1) {
-                stop = start(set) || noop;
-            }
-            run(value);
-            return () => {
-                subscribers.delete(subscriber);
-                if (subscribers.size === 0) {
-                    stop();
-                    stop = null;
-                }
-            };
-        }
-        return { set, update, subscribe };
-    }
-
-    const { subscribe, set, update } = writable({
-        AccessToken: undefined,
-        State:       undefined
-      });
-
-      function define (KeyOrObject, Value) {
-        if (typeof(KeyOrObject) === 'string') {
-          update((Globals) => { Globals[KeyOrObject] = Value; return Globals });
-        } else {
-          update((Globals) => Object.assign(Globals,KeyOrObject));
-        }
-      }
-
-      const Globals = { subscribe, define };
 
     /* src/InfoPage.svelte generated by Svelte v3.42.1 */
 
@@ -1113,14 +1441,6 @@ var app = (function () {
         get detailledOrientation() { return detailledScreenOrientation; },
     };
 
-    //----------------------------------------------------------------------------//
-    /**** constrained ****/
-    function constrained(Value, Minimum, Maximum) {
-        if (Minimum === void 0) { Minimum = -Infinity; }
-        if (Maximum === void 0) { Maximum = Infinity; }
-        return Math.max(Minimum, Math.min(Value, Maximum));
-    }
-
     /* src/ApplicationCell.svelte generated by Svelte v3.42.1 */
 
     function create_fragment$1(ctx) {
@@ -1290,7 +1610,7 @@ var app = (function () {
     	};
     }
 
-    // (43:2) {#if $Globals.AccessToken == null}
+    // (39:2) {#if $Globals.AccessToken === ''}
     function create_if_block(ctx) {
     	let current_block_type_index;
     	let if_block;
@@ -1360,7 +1680,7 @@ var app = (function () {
     	};
     }
 
-    // (46:4) {:else}
+    // (42:4) {:else}
     function create_else_block(ctx) {
     	let infopage;
     	let current;
@@ -1404,7 +1724,7 @@ var app = (function () {
     	};
     }
 
-    // (44:4) {#if SubPath === '#/Legal'}
+    // (40:4) {#if SubPath === '#/Legal'}
     function create_if_block_1(ctx) {
     	let legalpage;
     	let current;
@@ -1434,7 +1754,7 @@ var app = (function () {
     	};
     }
 
-    // (48:8) {#if $Globals.State === 'Login'}
+    // (44:8) {#if $Globals.State === 'Login'}
     function create_if_block_2(ctx) {
     	let overlay;
     	let current;
@@ -1469,7 +1789,7 @@ var app = (function () {
     	};
     }
 
-    // (49:10) <Overlay>
+    // (45:10) <Overlay>
     function create_default_slot_2(ctx) {
     	let logindialog;
     	let current;
@@ -1498,7 +1818,7 @@ var app = (function () {
     	};
     }
 
-    // (47:6) <InfoPage>
+    // (43:6) <InfoPage>
     function create_default_slot_1(ctx) {
     	let if_block_anchor;
     	let current;
@@ -1552,7 +1872,7 @@ var app = (function () {
     	};
     }
 
-    // (42:0) <ApplicationCell>
+    // (38:0) <ApplicationCell>
     function create_default_slot(ctx) {
     	let current_block_type_index;
     	let if_block;
@@ -1562,7 +1882,7 @@ var app = (function () {
     	const if_blocks = [];
 
     	function select_block_type(ctx, dirty) {
-    		if (/*$Globals*/ ctx[1].AccessToken == null) return 0;
+    		if (/*$Globals*/ ctx[1].AccessToken === '') return 0;
     		return 1;
     	}
 
@@ -1678,21 +1998,16 @@ var app = (function () {
     			Globals.define('ResetToken', completeURL.replace(/^.*\/\#\/reset\//, ''));
     	}
 
-    	Globals.define({
-    		AccessToken: sessionStorage['vfb-notes: access-token'],
-    		EMailAddress: localStorage['vfb-notes: email-address'],
-    		Password: sessionStorage['vfb-notes: password']
-    	});
-
     	switch (true) {
-    		case $Globals.ConfirmationToken != null:
+    		case $Globals.ConfirmationToken !== '':
     			Globals.define('State', 'UserConfirmation');
     			break;
-    		case $Globals.ConfirmationToken != null:
-    			Globals.define('ResetToken', 'PasswordReset');
+    		case $Globals.ConfirmationToken !== '':
+    			Globals.define('State', 'PasswordReset');
     			break;
     	}
 
+    	Globals.define('State', 'Login');
     	let SubPath = document.location.hash;
 
     	window.addEventListener('hashchange', () => {
