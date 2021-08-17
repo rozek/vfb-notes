@@ -119,7 +119,7 @@
 
     <div class="Block">
       If you forgot your password, you may ask for a
-      <a href="#/" on:click={showPasswordReset}>password reset</a>
+      <a href="#/" on:click={showPasswordReset}>password reset</a>.
     </div>
 
     <button on:click={closeMessage}>Ok</button>
