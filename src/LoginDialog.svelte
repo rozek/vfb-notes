@@ -152,12 +152,12 @@
 
   function showPasswordReset (Event) {
     Event.preventDefault()
-    Globals.define('State','PasswordReset')
+    Globals.define('State','ResetRequest')
   }
 
   async function doLogin (Event) {
     Event.preventDefault()
-    Globals.define({ State:'LoggingIn', EMailAddress, Password })
+    Globals.define({ State:'loggingIn', EMailAddress, Password })
 
     try {
       await focusOnApplication($Globals.ApplicationURL,$Globals.ApplicationId)
