@@ -12,6 +12,7 @@
   import NotePage        from './NotePage.svelte'
   import Overlay         from './Overlay.svelte'
   import LoginDialog     from './LoginDialog.svelte'
+  import LoginMessage    from './LoginMessage.svelte'
 </script>
 
 <script lang="ts">
@@ -39,18 +40,17 @@ Globals.define('State','Login')
 </script>
 
 <ApplicationCell>
-  {#if $Globals.AccessToken === ''}
+  {#if $Globals.loggedIn}
+    <NotePage>
+    </NotePage>
+  {:else}
     {#if SubPath === '#/Legal'}
       <LegalPage/>
     {:else}
       <InfoPage>
-        {#if $Globals.State === 'Login'}
-          <Overlay><LoginDialog/></Overlay>
-        {/if}
+        {#if $Globals.State === 'Login'}    <Overlay><LoginDialog/></Overlay>{/if}
+        {#if $Globals.State === 'LoggingIn'}<Overlay><LoginMessage/></Overlay>{/if}
       </InfoPage>
     {/if}
-  {:else}
-    <NotePage>
-    </NotePage>
   {/if}
 </ApplicationCell>
