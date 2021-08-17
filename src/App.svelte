@@ -8,7 +8,10 @@
   import { Globals }     from './Globals.js'
   import ApplicationCell from './ApplicationCell.svelte'
   import InfoPage        from './InfoPage.svelte'
+  import LegalPage       from './LegalPage.svelte'
   import NotePage        from './NotePage.svelte'
+  import Overlay         from './Overlay.svelte'
+  import LoginDialog     from './LoginDialog.svelte'
 </script>
 
 <script lang="ts">
@@ -33,12 +36,23 @@
       Globals.define('ResetToken','PasswordReset'); break
   }
 
+  let SubPath = document.location.hash
+  window.addEventListener(
+    'hashchange', () => { SubPath = document.location.hash }
+  )
 </script>
 
 <ApplicationCell>
   {#if $Globals.AccessToken == null}
-    <InfoPage>
-    </InfoPage>
+    {#if SubPath === '#/Legal'}
+      <LegalPage/>
+    {:else}
+      <InfoPage>
+        {#if $Globals.State === 'Login'}
+          <Overlay><LoginDialog/></Overlay>
+        {/if}
+      </InfoPage>
+    {/if}
   {:else}
     <NotePage>
     </NotePage>
