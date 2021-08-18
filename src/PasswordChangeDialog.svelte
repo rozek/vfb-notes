@@ -9,11 +9,6 @@
     background-color:white;
   }
 
-  .Dialog a, .Dialog a:visited {
-    color:#2980B9;
-    text-decoration:underline;
-  }
-
   .Dialog > div {
     display:flex; position:relative;
     flex-flow:column nowrap; align-items:stretch;
@@ -52,13 +47,13 @@
     font-size:16px;
   }
 
-  .Dialog > div > .Hint {
+  .Dialog > div .Hint {
     display:inline-block; position:relative;
     left:2px; top:-2px;
     font-size:12px
   }
 
-  .Dialog > div > .invalid.Hint {
+  .Dialog > div .invalid.Hint {
     color:red;
   }
 
@@ -144,7 +139,7 @@
       newConfirmationLooksBad = true;  newConfirmationMessage = 'new password differs from its confirmation'
       break
     default:
-      newConfirmationLooksBad = false; newConfirmationMessage = '&nbsp;'
+      newConfirmationLooksBad = false; newConfirmationMessage = 'new password and its confirmation are equal'
   }
 
   $: ChangeIsForbidden = oldPasswordLooksBad || newPasswordLooksBad || newConfirmationLooksBad
