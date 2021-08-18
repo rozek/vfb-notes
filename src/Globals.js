@@ -9,6 +9,8 @@
     EMailAddress:      localStorage['vfb-notes: email-address']  || '',
     Password:          sessionStorage['vfb-notes: password']     || '',
     loggedIn:          false,
+    firstName:         '',
+    lastName:          '',
     State:             '',
     FailureReason:     ''
   })
