@@ -52,13 +52,13 @@
     font-size:16px;
   }
 
-  .Dialog > div > .Hint {
+  .Dialog > div .Hint {
     display:inline-block; position:relative;
     left:2px; top:-2px;
     font-size:12px
   }
 
-  .Dialog > div > .invalid.Hint {
+  .Dialog > div .invalid.Hint {
     color:red;
   }
 
@@ -146,6 +146,6 @@
     <input type="password" bind:value={Password} placeholder="your new password">
     <div class:Hint={true} class:invalid={PasswordLooksBad}>{PasswordMessage}</div>
 
-    <button disabled={ChangeIsForbidden} on:click={resetPassword}>Reset Password</button>
+    <button disabled={ResetIsForbidden} on:click={resetPassword}>Reset Password</button>
   </div>
 </div>
