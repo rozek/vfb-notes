@@ -9,11 +9,6 @@
     background-color:white;
   }
 
-  .Dialog a, .Dialog a:visited {
-    color:#2980B9;
-    text-decoration:underline;
-  }
-
   .Dialog > div {
     display:flex; position:relative;
     flex-flow:column nowrap; align-items:stretch;
@@ -121,7 +116,7 @@
 
     <div class="Block">
       <input type="checkbox" bind:checked={StatementChecked}/>
-      I understand, that I will loose all my data if I proceed
+      I accept loosing all my data
     </div>
 
     <button disabled={! StatementChecked} on:click={deleteAccount}>Delete Account</button>
