@@ -9,11 +9,6 @@
     background-color:white;
   }
 
-  .Dialog a, .Dialog a:visited {
-    color:#2980B9;
-    text-decoration:underline;
-  }
-
   .Dialog > div {
     display:flex; position:relative;
     flex-flow:column nowrap; align-items:stretch;
@@ -52,13 +47,13 @@
     font-size:16px;
   }
 
-  .Dialog > div > .Hint {
+  .Dialog > div .Hint {
     display:inline-block; position:relative;
     left:2px; top:-2px;
     font-size:12px
   }
 
-  .Dialog > div > .invalid.Hint {
+  .Dialog > div .invalid.Hint {
     color:red;
   }
 
@@ -82,11 +77,13 @@
 </style>
 
 <script context="module" lang="ts">
-  import { Globals } from './Globals.js'
+  import { ValueIsEMailAddress } from 'javascript-interface-library'
 
   import {
     focusOnApplication, actOnBehalfOfCustomer, changeCustomerEMailAddressTo
   } from 'voltcloud-for-browsers'
+
+  import { Globals } from './Globals.js'
 </script>
 
 <script lang="ts">
@@ -122,7 +119,11 @@
       await actOnBehalfOfCustomer($Globals.EMailAddress,$Globals.Password)
       await changeCustomerEMailAddressTo(EMailAddress)
     } catch (Signal) {
-      Globals.define({ State:'CommunicationFailure', FailureReason:Signal.toString() })
+      if (Signal.name === 'ConflictError') {
+        Globals.define('State','EMailAddressChangeFailure')
+      } else {
+        Globals.define({ State:'CommunicationFailure', FailureReason:Signal.toString() })
+      }
       return
     }
 
