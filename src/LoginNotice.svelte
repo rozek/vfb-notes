@@ -34,6 +34,6 @@
 
 <div class="Dialog">
   <div>
-    <div name="Title">Logging in...please wait</div>
+    <div name="Title">Logging in...</div>
   </div>
 </div>
