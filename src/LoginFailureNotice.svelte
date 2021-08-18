@@ -9,11 +9,6 @@
     background-color:white;
   }
 
-  .Dialog a, .Dialog a:visited {
-    color:#2980B9;
-    text-decoration:underline;
-  }
-
   .Dialog > div {
     display:flex; position:relative;
     flex-flow:column nowrap; align-items:stretch;
@@ -41,6 +36,12 @@
     text-align:center;
     color:white;
     cursor:pointer;
+  }
+
+
+  .Dialog a, .Dialog a:visited {
+    color:#2980B9;
+    text-decoration:underline;
   }
 
 
