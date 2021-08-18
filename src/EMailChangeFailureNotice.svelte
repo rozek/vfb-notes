@@ -9,11 +9,6 @@
     background-color:white;
   }
 
-  .Dialog a, .Dialog a:visited {
-    color:#2980B9;
-    text-decoration:underline;
-  }
-
   .Dialog > div {
     display:flex; position:relative;
     flex-flow:column nowrap; align-items:stretch;
@@ -61,7 +56,7 @@
 <script lang="ts">
   function closeNotice (Event) {
     Event.preventDefault()
-    Globals.define('State','')
+    Globals.define('State','EMailAddressChange')
   }
 </script>
 
@@ -72,6 +67,10 @@
     <div class="Block">
       Your email address could not be changed because it is currently used by
       somebody.
+    </div>
+
+    <div class="Block">
+      Please try again with a different email address.
     </div>
 
     <button on:click={closeNotice}>Ok</button>
