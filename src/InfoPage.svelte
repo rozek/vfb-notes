@@ -55,7 +55,7 @@
     document.location.href = '#/Legal'
   }
 
-  function showLogin (Event) {
+  function startLogin (Event) {
     Event.preventDefault()
     Globals.define('State','Login')
   }
@@ -65,7 +65,7 @@
   <div class="NavigationBar">
     <div class="left Button"  on:click={showLegal}>Legal Info</div>
     <div class="Title">VfB-Notes</div>
-    <div class="right Button" on:click={showLogin}>Proceed <span class="Caret">⟩</span></div>
+    <div class="right Button" on:click={startLogin}>Proceed <span class="Caret">⟩</span></div>
   </div>
   <div class="ContentArea">
     <div class="Block">
