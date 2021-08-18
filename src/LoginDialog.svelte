@@ -21,6 +21,15 @@
     padding:10px;
   }
 
+  .Dialog > div > [name="Title"] {
+    display:block; position:relative;
+    padding:4px 0px 14px 0px;
+    font-size:18px; font-weight:bold;
+    text-align:center;
+    color:#222222;
+  }
+
+
   .Dialog > div > [name="CloseButton"] {
     display:block; position:absolute;
     top:-20px; right:-20px; width:20px; height:20px;
@@ -34,18 +43,6 @@
     cursor:pointer;
   }
 
-  .Dialog > div > [name="Title"] {
-    display:block; position:relative;
-    padding:4px 0px 14px 0px;
-    font-size:18px; font-weight:bold;
-    text-align:center;
-    color:#222222;
-  }
-
-  .Dialog > div > .Block {
-    display:block; margin:0px 0px 10px 0px;
-    text-align:justify;
-  }
 
   .Dialog > div > input {
     appearance:none; -webkit-appearance:none; -moz-appearance:none; -o-appearance:none;
@@ -54,6 +51,17 @@
     border:solid 1px lightgray; border-radius:2px;
     font-size:16px;
   }
+
+  .Dialog > div > .Hint {
+    display:inline-block; position:relative;
+    left:2px; top:-2px;
+    font-size:12px
+  }
+
+  .Dialog > div > .invalid.Hint {
+    color:red;
+  }
+
 
   .Dialog > div > button {
     appearance:none; -webkit-appearance:none; -moz-appearance:none; -o-appearance:none;
@@ -70,24 +78,19 @@
     cursor:auto;
   }
 
-  .Dialog > div > .FormMessage {
-    display:inline-block; position:relative;
-    left:2px; top:-2px;
-    font-size:12px
-  }
-
-  .Dialog > div > .invalid.FormMessage {
-    color:red;
-  }
 
 
-  .Dialog > div > [name="ForgottenPassword"] {
+  .Dialog > div > [name="UnconfirmedAccount"] {
     display:block; position:relative;
-    padding:10px 0px 10px 0px;
+    margin:10px 0px 5px 0px;
     text-align:right;
   }
 
-
+  .Dialog > div > [name="ForgottenPassword"] {
+    display:block; position:relative;
+    margin:5px 0px 10px 0px;
+    text-align:right;
+  }
 </style>
 
 <script context="module" lang="ts">
@@ -109,13 +112,13 @@
 
   $: switch (true) {
     case (EMailAddress.trim() === ''):
-      AddressLooksBad = true;  AddressMessage = 'please, enter your EMail address'
+      AddressLooksBad = true;  AddressMessage = 'please, enter your email address'
       break
     case ValueIsEMailAddress(EMailAddress):
       AddressLooksBad = false; AddressMessage = 'your email address looks acceptable'
       break
     default:
-      AddressLooksBad = true;  AddressMessage = 'please, enter a valid EMail address'
+      AddressLooksBad = true;  AddressMessage = 'please, enter a valid email address'
   }
 
   $: switch (true) {
@@ -145,19 +148,24 @@
     Globals.define('State','')
   }
 
-  function showRegistration (Event) {
+  function startRegistration (Event) {
     Event.preventDefault()
     Globals.define('State','Registration')
   }
 
-  function showPasswordReset (Event) {
+  function startRenewalRequest (Event) {
     Event.preventDefault()
-    Globals.define('State','ResetRequest')
+    Globals.define('State','RenewalRequest')
+  }
+
+  function startPasswordReset (Event) {
+    Event.preventDefault()
+    Globals.define('State','ResetPassword')
   }
 
   async function doLogin (Event) {
     Event.preventDefault()
-    Globals.define({ State:'loggingIn', EMailAddress, Password })
+    Globals.define({ State:'sendingLogin', EMailAddress, Password })
 
     try {
       await focusOnApplication($Globals.ApplicationURL,$Globals.ApplicationId)
@@ -180,20 +188,19 @@
     <div name="CloseButton" on:click={closeDialog}>&times;</div>
     <div name="Title">Login</div>
 
-    <input name="EMailAddressInput" type="email" bind:value={EMailAddress}
-      placeholder="your email address">
-    <div class:FormMessage={true} class:invalid={AddressLooksBad}>{AddressMessage}</div>
+    <input type="email" bind:value={EMailAddress} placeholder="your email address">
+    <div class:Hint={true} class:invalid={AddressLooksBad}>{AddressMessage}</div>
 
-    <input name="PasswordInput" type="password" bind:value={Password}
-      placeholder="your password">
-    <div class:FormMessage={true} class:invalid={PasswordLooksBad}>{PasswordMessage}</div>
+    <input type="password" bind:value={Password} placeholder="your password">
+    <div class:Hint={true} class:invalid={PasswordLooksBad}>{PasswordMessage}</div>
 
-    <div name="ForgottenPassword"><a href="#/" on:click={showPasswordReset}>Forgot your password?</a></div>
+    <div name="UnconfirmedAccount"><a href="#/" on:click={startRenewalRequest}>Did not confirm your account?</a></div>
+    <div name="ForgottenPassword"><a href="#/" on:click={startPasswordReset}>Forgot your password?</a></div>
 
-    <button name="LoginButton" disabled={LoginIsForbidden} on:click={doLogin}>Login</button>
+    <button disabled={LoginIsForbidden} on:click={doLogin}>Login</button>
 
     <div style="text-align:center">
-      Don't have an account? <a href="#/" on:click={showRegistration}>Create one!</a>
+      Don't have an account? <a href="#/" on:click={startRegistration}>Create one!</a>
     </div>
   </div>
 </div>
