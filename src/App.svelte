@@ -5,7 +5,10 @@
 </style>
 
 <script context="module" lang="ts">
-  import { Globals }                 from './Globals.js'
+  import {
+    focusOnApplication, confirmCustomerUsing
+  } from 'voltcloud-for-browsers'
+
   import ApplicationCell             from './ApplicationCell.svelte'
   import InfoPage                    from './InfoPage.svelte'
   import LegalPage                   from './LegalPage.svelte'
@@ -45,6 +48,8 @@
   import UnregistrationNotice        from './UnregistrationNotice.svelte'
   import UnregisteredNotice          from './UnregisteredNotice.svelte'
   import CommunicationFailureNotice  from './CommunicationFailureNotice.svelte'
+
+  import { Globals } from './Globals.js'
 </script>
 
 <script lang="ts">
@@ -54,12 +59,26 @@
       Globals.define({
         ConfirmationToken:completeURL.replace(/^.*\/\#\/confirm\//,''),
         State:'confirming'
-      }); break
+      })
+      confirmAccount()
+      break
     case (completeURL.indexOf('/#/reset/') > 0):
       Globals.define({
         ResetToken:completeURL.replace(/^.*\/\#\/reset\//,''),
         State:'PasswordReset'
       })
+  }
+
+  async function confirmAccount () {
+    try {
+      await focusOnApplication($Globals.ApplicationURL,$Globals.ApplicationId)
+      await confirmCustomerUsing($Globals.ConfirmationToken)
+    } catch (Signal) {
+      Globals.define({ State:'CommunicationFailure', FailureReason:Signal.toString() })
+      return
+    }
+
+    Globals.define({ ConfirmationToken:'', State:'confirmed' })
   }
 
   let SubPath = document.location.hash
