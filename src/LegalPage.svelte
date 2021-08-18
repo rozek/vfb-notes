@@ -91,7 +91,7 @@
       <ul>
         <li>stored permanently (until deletion):
           <ul>
-            <li>your EMail address</li>
+            <li>your email address</li>
           </ul>
         </li>
         <li>stored during a single "session" only:
@@ -118,7 +118,7 @@
       <ul>
         <li>
           your account, which was created to use this application
-          (including your EMail address, your first and last name and wether
+          (including your email address, your first and last name and wether
           your account has been confirmed or not)
           <br>&nbsp;<br>
           <i>The developer will never use this knowledge to send you unrequested
