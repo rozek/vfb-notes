@@ -37,12 +37,12 @@
     display:block; flex:1 1 auto; overflow:auto;
   }
 
+
+
   .ContentArea .Block {
     display:block; margin:20px;
     text-align:justify;
   }
-
-
 </style>
 
 <script context="module" lang="ts">
@@ -50,22 +50,15 @@
 </script>
 
 <script lang="ts">
-  function showLegal (Event) {
-    Event.preventDefault()
-    document.location.href = '#/Legal'
-  }
-
-  function startLogin (Event) {
-    Event.preventDefault()
-    Globals.define('State','Login')
-  }
+  function showLegal ()  { document.location.href = '#/Legal' }
+  function startLogin () { Globals.define('State','Login') }
 </script>
 
 <div class="Page">
   <div class="NavigationBar">
-    <div class="left Button"  on:click={showLegal}>Legal Info</div>
+    <div class="left Button"  on:click|preventDefault={showLegal}>Legal Info</div>
     <div class="Title">VfB-Notes</div>
-    <div class="right Button" on:click={startLogin}>Proceed <span class="Caret">⟩</span></div>
+    <div class="right Button" on:click|preventDefault={startLogin}>Proceed <span class="Caret">⟩</span></div>
   </div>
   <div class="ContentArea">
     <div class="Block">
@@ -99,7 +92,7 @@
       This "service" is provided free of charge on a "best-effort" basis.
     </div>
     <div class="Block">
-      Please, consider the <a href="#/" on:click={showLegal}>Data Privacy
+      Please, consider the <a href="#/" on:click|preventDefault={showLegal}>Data Privacy
       Statement</a> for this little application and VoltCloud's
       <a href="https://www.appstudio.dev/app/legal/legal.php">Terms of Service</a>
       before applying for an account.
