@@ -67,7 +67,7 @@
 
 <div class="Dialog">
   <div>
-    <div name="Title">Password Reset Request Sent</div>
+    <div name="Title">Password Reset Requested</div>
 
     <div class="Block">
       An email containing a link to reset your password has been sent.
