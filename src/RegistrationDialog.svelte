@@ -9,11 +9,6 @@
     background-color:white;
   }
 
-  .Dialog a, .Dialog a:visited {
-    color:#2980B9;
-    text-decoration:underline;
-  }
-
   .Dialog > div {
     display:flex; position:relative;
     flex-flow:column nowrap; align-items:stretch;
@@ -44,6 +39,12 @@
   }
 
 
+  .Dialog a, .Dialog a:visited {
+    color:#2980B9;
+    text-decoration:underline;
+  }
+
+
   .Dialog > div > input {
     appearance:none; -webkit-appearance:none; -moz-appearance:none; -o-appearance:none;
     display:block; position:relative;
@@ -52,13 +53,13 @@
     font-size:16px;
   }
 
-  .Dialog > div > .Hint {
+  .Dialog > div .Hint {
     display:inline-block; position:relative;
     left:2px; top:-2px;
     font-size:12px
   }
 
-  .Dialog > div > .invalid.Hint {
+  .Dialog > div .invalid.Hint {
     color:red;
   }
 
@@ -147,7 +148,7 @@
       ConfirmationLooksBad = true;  ConfirmationMessage = 'password and confirmation differ'
       break
     default:
-      ConfirmationLooksBad = false; ConfirmationMessage = '&nbsp;'
+      ConfirmationLooksBad = false; ConfirmationMessage = 'password and confirmation are equal'
   }
 
   $: {
@@ -210,13 +211,17 @@
     <div class:Hint={true} class:invalid={ConfirmationLooksBad}>{ConfirmationMessage}</div>
 
     <div name="LegalRow">
-      Agreeing to <a href="#/" on:click={showLegal}>Data Privacy Statement?</a>
-      <input type="checkbox" bind:checked={DPSAgreementChecked}>
-      <div class="Hint">{DPSAgreementMessage}</div>
+      <div>
+        Agreeing to <a href="#/" on:click={showLegal}>Data Privacy Statement?</a>
+        <input type="checkbox" bind:checked={DPSAgreementChecked}>
+      </div>
+      <div class:Hint={true} class:invalid={! DPSAgreementChecked}>{DPSAgreementMessage}</div>
 
-      Agreeing to <a href="https://www.appstudio.dev/app/legal/legal.php">Terms of Service?</a>
-      <input type="checkbox" bind:checked={TOSAgreementChecked}>
-      <div class="Hint">{TOSAgreementMessage}</div>
+      <div>
+        Agreeing to <a href="https://www.appstudio.dev/app/legal/legal.php">Terms of Service?</a>
+        <input type="checkbox" bind:checked={TOSAgreementChecked}>
+      </div>
+      <div class:Hint={true} class:invalid={! TOSAgreementChecked}>{TOSAgreementMessage}</div>
     </div>
 
     <button disabled={SubmitIsForbidden} on:click={createAccount}>Create Your Account</button>
