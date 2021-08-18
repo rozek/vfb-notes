@@ -9,11 +9,6 @@
     background-color:white;
   }
 
-  .Dialog a, .Dialog a:visited {
-    color:#2980B9;
-    text-decoration:underline;
-  }
-
   .Dialog > div {
     display:flex; position:relative;
     flex-flow:column nowrap; align-items:stretch;
@@ -44,6 +39,12 @@
   }
 
 
+  .Dialog a, .Dialog a:visited {
+    color:#2980B9;
+    text-decoration:underline;
+  }
+
+
   .Dialog > div > input {
     appearance:none; -webkit-appearance:none; -moz-appearance:none; -o-appearance:none;
     display:block; position:relative;
@@ -52,13 +53,13 @@
     font-size:16px;
   }
 
-  .Dialog > div > .Hint {
+  .Dialog > div .Hint {
     display:inline-block; position:relative;
     left:2px; top:-2px;
     font-size:12px
   }
 
-  .Dialog > div > .invalid.Hint {
+  .Dialog > div .invalid.Hint {
     color:red;
   }
 
@@ -160,7 +161,7 @@
 
   function startPasswordReset (Event) {
     Event.preventDefault()
-    Globals.define('State','ResetPassword')
+    Globals.define('State','ResetRequest')
   }
 
   async function doLogin (Event) {
