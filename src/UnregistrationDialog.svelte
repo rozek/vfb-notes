@@ -89,8 +89,13 @@
       await actOnBehalfOfCustomer($Globals.EMailAddress,$Globals.Password)
       await deleteCustomer()
     } catch (Signal) {
-      Globals.define({ State:'CommunicationFailure', FailureReason:Signal.toString() })
-      return
+      if (Signal.name === 'LoginFailed') {
+        return Globals.define({ loggedIn:false, State:'loggedOut' })
+      } else {
+        return Globals.define({
+          State:'CommunicationFailure', FailureReason:Signal.toString()
+        })
+      }
     }
 
     Globals.define({ loggedIn:false, AccessToken:'', State:'unregistered' })
