@@ -9,11 +9,6 @@
     background-color:white;
   }
 
-  .Dialog a, .Dialog a:visited {
-    color:#2980B9;
-    text-decoration:underline;
-  }
-
   .Dialog > div {
     display:flex; position:relative;
     flex-flow:column nowrap; align-items:stretch;
@@ -52,13 +47,13 @@
     font-size:16px;
   }
 
-  .Dialog > div > .Hint {
+  .Dialog > div .Hint {
     display:inline-block; position:relative;
     left:2px; top:-2px;
     font-size:12px
   }
 
-  .Dialog > div > .invalid.Hint {
+  .Dialog > div .invalid.Hint {
     color:red;
   }
 
@@ -85,18 +80,41 @@
   import { Globals } from './Globals.js'
 
   import {
+    maxNamePartLength,
     focusOnApplication, actOnBehalfOfCustomer, updateCustomerRecordBy
   } from 'voltcloud-for-browsers'
 </script>
 
 <script lang="ts">
-  let firstName:string = $Globals.firstName
-  let lastName:string  = $Globals.lastName
+  let firstName:string, firstNameLooksBad:boolean, firstNameMessage:string
+  let lastName:string,  lastNameLooksBad:boolean,  lastNameMessage:string
 
-  $: {
-    firstNameMessage = (firstName.trim() === '' ? 'please, enter your first name' : '')
-    lastNameMessage  = (lastName.trim()  === '' ? 'please, enter your last name'  : '')
+  firstName = $Globals.firstName
+  lastName  = $Globals.lastName
+
+  $: switch (true) {
+    case (firstName.trim() === ''):
+      firstNameLooksBad = false; firstNameMessage = 'please, enter your first name'
+      break
+    case (firstName.trim().length > maxNamePartLength):
+      firstNameLooksBad = true;  firstNameMessage = 'the given name is too long'
+      break
+    default:
+      firstNameLooksBad = false; firstNameMessage = 'the given name looks acceptable'
   }
+
+  $: switch (true) {
+    case (lastName.trim() === ''):
+      lastNameLooksBad = false; lastNameMessage = 'please, enter your last name'
+      break
+    case (lastName.trim().length > maxNamePartLength):
+      lastNameLooksBad = true;  lastNameMessage = 'the given name is too long'
+      break
+    default:
+      lastNameLooksBad = false; lastNameMessage = 'the given name looks acceptable'
+  }
+
+  $: ChangeIsForbidden = firstNameLooksBad || lastNameLooksBad
 
   function closeDialog (Event) {
     Event.preventDefault()
@@ -130,11 +148,11 @@
     <div name="CloseButton" on:click={closeDialog}>&times;</div>
 
     <input type="text" bind:value={firstName} placeholder="your first name">
-    <div class:Hint={true}>{firstNameMessage}</div>
+    <div class:Hint={true} class:invalid={firstNameLooksBad}>{firstNameMessage}</div>
 
     <input type="text" bind:value={lastName} placeholder="your last name">
-    <div class:Hint={true}>{lastNameMessage}</div>
+    <div class:Hint={true} class:invalid={lastNameLooksBad}>{lastNameMessage}</div>
 
-    <button disabled={! StatementChecked} on:click={changeName}>Change Name</button>
+    <button disabled={ChangeIsForbidden} on:click={changeName}>Change Name</button>
   </div>
 </div>
