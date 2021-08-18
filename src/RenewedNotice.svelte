@@ -70,7 +70,7 @@
     <div name="Title">Confirmation Message Sent</div>
 
     <div class="Block">
-      Another email containing a link to confirm your account has been sent.
+      Another confirmation message has been sent to the given email address.
     </div>
 
     <div class="Block">
