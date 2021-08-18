@@ -119,12 +119,16 @@
       await actOnBehalfOfCustomer($Globals.EMailAddress,$Globals.Password)
       await changeCustomerEMailAddressTo(EMailAddress)
     } catch (Signal) {
-      if (Signal.name === 'ConflictError') {
-        Globals.define('State','EMailAddressChangeFailure')
-      } else {
-        Globals.define({ State:'CommunicationFailure', FailureReason:Signal.toString() })
+      switch (Signal.name) {
+        case 'LoginFailed':
+          return Globals.define({ loggedIn:false, State:'loggedOut' })
+        case 'ConflictError':
+          return Globals.define('State','EMailAddressChangeFailure')
+        default:
+          return Globals.define({
+            State:'CommunicationFailure', FailureReason:Signal.toString()
+          })
       }
-      return
     }
 
     Globals.define({ EMailAddress, State:'EMailAddressChanged' })
