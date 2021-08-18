@@ -61,7 +61,7 @@
 <script lang="ts">
   function closeNotice (Event) {
     Event.preventDefault()
-    Globals.define('State','')
+    Globals.define('State','Registration')
   }
 </script>
 
@@ -72,6 +72,10 @@
     <div class="Block">
       Your account could not be created because the given email address is
       currently used by somebody.
+    </div>
+
+    <div class="Block">
+      Please try again with a different email address.
     </div>
 
     <button on:click={closeNotice}>Ok</button>
