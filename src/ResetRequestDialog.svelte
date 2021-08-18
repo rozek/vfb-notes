@@ -21,6 +21,15 @@
     padding:10px;
   }
 
+  .Dialog > div > [name="Title"] {
+    display:block; position:relative;
+    padding:4px 0px 14px 0px;
+    font-size:18px; font-weight:bold;
+    text-align:center;
+    color:#222222;
+  }
+
+
   .Dialog > div > [name="CloseButton"] {
     display:block; position:absolute;
     top:-20px; right:-20px; width:20px; height:20px;
@@ -34,18 +43,6 @@
     cursor:pointer;
   }
 
-  .Dialog > div > [name="Title"] {
-    display:block; position:relative;
-    padding:4px 0px 14px 0px;
-    font-size:18px; font-weight:bold;
-    text-align:center;
-    color:#222222;
-  }
-
-  .Dialog > div > .Block {
-    display:block; margin:0px 0px 10px 0px;
-    text-align:justify;
-  }
 
   .Dialog > div > input {
     appearance:none; -webkit-appearance:none; -moz-appearance:none; -o-appearance:none;
@@ -54,6 +51,23 @@
     border:solid 1px lightgray; border-radius:2px;
     font-size:16px;
   }
+
+  .Dialog > div > .Hint {
+    display:inline-block; position:relative;
+    left:2px; top:-2px;
+    font-size:12px
+  }
+
+  .Dialog > div > .invalid.Hint {
+    color:red;
+  }
+
+
+  .Dialog > div > .Block {
+    display:block; margin:0px 0px 10px 0px;
+    text-align:justify;
+  }
+
 
   .Dialog > div > button {
     appearance:none; -webkit-appearance:none; -moz-appearance:none; -o-appearance:none;
@@ -70,16 +84,6 @@
     cursor:auto;
   }
 
-  .Dialog > div > .FormMessage {
-    display:inline-block; position:relative;
-    left:2px; top:-2px;
-    font-size:12px
-  }
-
-  .Dialog > div > .invalid.FormMessage {
-    color:red;
-  }
-
 
 </style>
 
@@ -94,19 +98,19 @@
 </script>
 
 <script lang="ts">
-  let EMailAddress:string, AddressLooksBad:boolean,  AddressMessage:string
+  let EMailAddress:string, AddressLooksBad:boolean, AddressMessage:string
 
   EMailAddress = $Globals.EMailAddress || ''
 
   $: switch (true) {
     case (EMailAddress.trim() === ''):
-      AddressLooksBad = true;  AddressMessage = 'please, enter your EMail address'
+      AddressLooksBad = true;  AddressMessage = 'please, enter your email address'
       break
     case ValueIsEMailAddress(EMailAddress):
       AddressLooksBad = false; AddressMessage = 'your email address looks acceptable'
       break
     default:
-      AddressLooksBad = true;  AddressMessage = 'please, enter a valid EMail address'
+      AddressLooksBad = true;  AddressMessage = 'please, enter a valid email address'
   }
 
   $: SubmitIsForbidden = AddressLooksBad
@@ -143,13 +147,12 @@
     </div>
 
     <div class="Block">
-      That email will be sent immediately after submitting this request, the link
-      within will be valid for one hour.
+      That email will be sent immediately after submitting this request, the
+      link it contains will be valid for one hour.
     </div>
 
-    <input name="EMailAddressInput" type="email" bind:value={EMailAddress}
-      placeholder="your email address">
-    <div class:FormMessage={true} class:invalid={AddressLooksBad}>{AddressMessage}</div>
+    <input type="email" bind:value={EMailAddress} placeholder="your email address">
+    <div class:Hint={true} class:invalid={AddressLooksBad}>{AddressMessage}</div>
 
     <button name="SubmitButton" disabled={SubmitIsForbidden} on:click={submitRequest}>SubmitRequest</button>
   </div>
