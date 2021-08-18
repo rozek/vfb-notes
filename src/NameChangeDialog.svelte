@@ -131,8 +131,13 @@
       await actOnBehalfOfCustomer($Globals.EMailAddress,$Globals.Password)
       await updateCustomerRecordBy({ first_name:firstName, last_name:lastName })
     } catch (Signal) {
-      Globals.define({ State:'CommunicationFailure', FailureReason:Signal.toString() })
-      return
+      if (Signal.name === 'LoginFailed') {
+        return Globals.define({ loggedIn:false, State:'loggedOut' })
+      } else {
+        return Globals.define({
+          State:'CommunicationFailure', FailureReason:Signal.toString()
+        })
+      }
     }
 
     Globals.define({
