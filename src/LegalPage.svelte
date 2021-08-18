@@ -37,11 +37,12 @@
     display:block; flex:1 1 auto; overflow:auto;
   }
 
+
+
   .ContentArea .Block {
     display:block; margin:20px;
     text-align:justify;
   }
-
 
   .ContentArea .Block ul {
     margin-left:20px; padding-left:0px;
@@ -50,20 +51,17 @@
   .ContentArea .Block ul ul {
     margin-left:10px; padding-left:0px;
   }
-
 </style>
 
 <script lang="ts">
-  function showInfo (Event) {
-    Event.preventDefault()
-    document.location.hash = '#/'
-  }
+  function showInfo () { document.location.hash = '#/' }
 </script>
 
 <div class="Page">
   <div class="NavigationBar">
-    <div class="left Button" on:click={showInfo}><span class="Caret">⟨</span> Back</div>
+    <div class="left Button" on:click|preventDefault={showInfo}><span class="Caret">⟨</span> Back</div>
     <div class="Title">VfB-Notes - Legal</div>
+    <div class="right Button"/>
   </div>
   <div class="ContentArea">
     <div class="Block">
