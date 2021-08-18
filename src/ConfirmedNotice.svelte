@@ -61,7 +61,7 @@
 <script lang="ts">
   function closeNotice (Event) {
     Event.preventDefault()
-    Globals.define('State','')
+    Globals.define('State','Login')
   }
 </script>
 
@@ -70,7 +70,7 @@
     <div name="Title">Account Confirmed</div>
 
     <div class="Block">
-      Your account was successfully confirmed. You may login now.
+      Your account has been successfully confirmed. You may login now.
     </div>
 
     <button on:click={closeNotice}>Ok</button>
