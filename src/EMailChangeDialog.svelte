@@ -104,14 +104,11 @@
 
   $: ChangeIsForbidden = AddressLooksBad
 
-  function closeDialog (Event) {
-    Event.preventDefault()
+  function closeDialog () {
     Globals.define('State','')
   }
 
-  async function changeEMailAddress (Event) {
-    Event.preventDefault()
-
+  async function changeEMailAddress () {
     Globals.define('State','changingEMailAddress')
 
     try {
@@ -139,11 +136,11 @@
 <div class="Dialog">
   <div>
     <div name="Title">EMail Address Change</div>
-    <div name="CloseButton" on:click={closeDialog}>&times;</div>
+    <div name="CloseButton" on:click|preventDefault={closeDialog}>&times;</div>
 
     <input type="email" bind:value={EMailAddress} placeholder="your new email address">
     <div class:Hint={true} class:invalid={AddressLooksBad}>{AddressMessage}</div>
 
-    <button disabled={ChangeIsForbidden} on:click={changeEMailAddress}>Change EMail Address</button>
+    <button disabled={ChangeIsForbidden} on:click|preventDefault={changeEMailAddress}>Change EMail Address</button>
   </div>
 </div>
