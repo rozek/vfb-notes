@@ -225,6 +225,10 @@
         console.error('Base64 decode failed',Signal)
         return undefined
       }
+
+      if (Buffer.length < secretbox.nonceLength) {
+        return undefined
+      }
     let Nonce  = Buffer.slice(0,secretbox.nonceLength)
     let decryptedValue = secretbox.open(
       Buffer.slice(secretbox.nonceLength), Nonce, EncryptionKey
