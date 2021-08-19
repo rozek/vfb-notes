@@ -144,28 +144,12 @@
 
   $: LoginIsForbidden = AddressLooksBad || PasswordLooksBad
 
-  function closeDialog (Event) {
-    Event.preventDefault()
-    Globals.define('State','')
-  }
+  function closeDialog ()         { Globals.define('State','') }
+  function startRegistration ()   { Globals.define('State','Registration') }
+  function startRenewalRequest () { Globals.define('State','RenewalRequest') }
+  function startPasswordReset ()  { Globals.define('State','ResetRequest') }
 
-  function startRegistration (Event) {
-    Event.preventDefault()
-    Globals.define('State','Registration')
-  }
-
-  function startRenewalRequest (Event) {
-    Event.preventDefault()
-    Globals.define('State','RenewalRequest')
-  }
-
-  function startPasswordReset (Event) {
-    Event.preventDefault()
-    Globals.define('State','ResetRequest')
-  }
-
-  async function doLogin (Event) {
-    Event.preventDefault()
+  async function doLogin () {
     Globals.define({ State:'sendingLogin', EMailAddress, Password })
 
     try {
@@ -196,7 +180,7 @@
 
 <div class="Dialog">
   <div>
-    <div name="CloseButton" on:click={closeDialog}>&times;</div>
+    <div name="CloseButton" on:click|preventDefault={closeDialog}>&times;</div>
     <div name="Title">Login</div>
 
     <input type="email" bind:value={EMailAddress} placeholder="your email address">
@@ -205,13 +189,13 @@
     <input type="password" bind:value={Password} placeholder="your password">
     <div class:Hint={true} class:invalid={PasswordLooksBad}>{PasswordMessage}</div>
 
-    <div name="UnconfirmedAccount"><a href="#/" on:click={startRenewalRequest}>Did not confirm your account?</a></div>
-    <div name="ForgottenPassword"><a href="#/" on:click={startPasswordReset}>Forgot your password?</a></div>
+    <div name="UnconfirmedAccount"><a href="#/" on:click|preventDefault={startRenewalRequest}>Did not confirm your account?</a></div>
+    <div name="ForgottenPassword" ><a href="#/" on:click|preventDefault={startPasswordReset}>Forgot your password?</a></div>
 
-    <button disabled={LoginIsForbidden} on:click={doLogin}>Login</button>
+    <button disabled={LoginIsForbidden} on:click|preventDefault={doLogin}>Login</button>
 
     <div style="text-align:center">
-      Don't have an account? <a href="#/" on:click={startRegistration}>Create one!</a>
+      Don't have an account? <a href="#/" on:click|preventDefault={startRegistration}>Create one!</a>
     </div>
   </div>
 </div>
