@@ -54,8 +54,7 @@
 </script>
 
 <script lang="ts">
-  function closeNotice (Event) {
-    Event.preventDefault()
+  function closeNotice () {
     Globals.define('State','Registration')
   }
 </script>
@@ -72,6 +71,6 @@
       If you want to use this application again, you will have to register anew.
     </div>
 
-    <button on:click={closeNotice}>Ok</button>
+    <button on:click|preventDefault={closeNotice}>Ok</button>
   </div>
 </div>
