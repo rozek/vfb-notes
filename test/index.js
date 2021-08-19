@@ -9757,7 +9757,7 @@ var app = (function () {
       The developer of this application has insight into
 
       <ul class="svelte-3cug1s"><li>your account, which was created to use this application
-          (including your email address, your first and last name and wether
+          (including your email address, your first and last name and whether
           your account has been confirmed or not)
           <br/> <br/> 
           <i>The developer will never use this knowledge to send you unrequested
