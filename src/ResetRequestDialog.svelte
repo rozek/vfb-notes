@@ -110,13 +110,11 @@
 
   $: SubmitIsForbidden = AddressLooksBad
 
-  function closeDialog (Event) {
-    Event.preventDefault()
+  function closeDialog () {
     Globals.define('State','')
   }
 
-  async function submitRequest (Event) {
-    Event.preventDefault()
+  async function submitRequest () {
     Globals.define({ State:'requestingReset' })
 
     try {
@@ -133,7 +131,7 @@
 
 <div class="Dialog">
   <div>
-    <div name="CloseButton" on:click={closeDialog}>&times;</div>
+    <div name="CloseButton" on:click|preventDefault={closeDialog}>&times;</div>
     <div name="Title">Request Password Reset</div>
 
     <div class="Block">
@@ -154,6 +152,6 @@
     <input type="email" bind:value={EMailAddress} placeholder="your email address">
     <div class:Hint={true} class:invalid={AddressLooksBad}>{AddressMessage}</div>
 
-    <button name="SubmitButton" disabled={SubmitIsForbidden} on:click={submitRequest}>Request Password Reset</button>
+    <button name="SubmitButton" disabled={SubmitIsForbidden} on:click|preventDefault={submitRequest}>Request Password Reset</button>
   </div>
 </div>
