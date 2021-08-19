@@ -48,6 +48,9 @@
   import UnregistrationNotice        from './UnregistrationNotice.svelte'
   import UnregisteredNotice          from './UnregisteredNotice.svelte'
   import CommunicationFailureNotice  from './CommunicationFailureNotice.svelte'
+  import MultiInstanceNotice         from './MultiInstanceNotice.svelte'
+  import DecryptionFailureNotice     from './DecryptionFailureNotice.svelte'
+  import ReencryptionFailureNotice   from './ReencryptionFailureNotice.svelte'
 
   import { Globals } from './Globals.js'
 </script>
@@ -65,7 +68,7 @@
     case (completeURL.indexOf('/#/reset/') > 0):
       Globals.define({
         ResetToken:completeURL.replace(/^.*\/\#\/reset\//,''),
-        State:'PasswordReset'
+        State:'ResetPassword'
       })
   }
 
@@ -87,6 +90,8 @@
   )
 </script>
 
+<svelte:window on:storage={() => Globals.define('State','multipleInstances')}/>
+
 <ApplicationCell>
   {#if $Globals.loggedIn}
     <NotePage>
@@ -101,11 +106,13 @@
       {#if $Globals.State === 'NameChange'}                <Overlay><NameChangeDialog/></Overlay>{/if}
       {#if $Globals.State === 'changingName'}              <Overlay><NameChangeNotice/></Overlay>{/if}
       {#if $Globals.State === 'NameChanged'}               <Overlay><NameChangedNotice/></Overlay>{/if}
-      {#if $Globals.State === 'loggedOut'}                 <Overlay><LogoutNotice/></Overlay>{/if}
       {#if $Globals.State === 'Unregistration'}            <Overlay><UnregistrationDialog/></Overlay>{/if}
       {#if $Globals.State === 'unregistering'}             <Overlay><UnregistrationNotice/></Overlay>{/if}
       {#if $Globals.State === 'unregistered'}              <Overlay><UnregisteredNotice/></Overlay>{/if}
       {#if $Globals.State === 'CommunicationFailure'}      <Overlay><CommunicationFailureNotice/></Overlay>{/if}
+      {#if $Globals.State === 'multipleInstances'}         <Overlay><MultiInstanceNotice/></Overlay>{/if}
+      {#if $Globals.State === 'DecryptionFailure'}         <Overlay><DecryptionFailureNotice/></Overlay>{/if}
+      {#if $Globals.State === 'ReencryptionFailure'}       <Overlay><ReencryptionFailureNotice/></Overlay>{/if}
     </NotePage>
   {:else}
     {#if SubPath === '#/Legal'}
@@ -130,7 +137,9 @@
         {#if $Globals.State === 'Login'}               <Overlay><LoginDialog/></Overlay>{/if}
         {#if $Globals.State === 'sendingLogin'}        <Overlay><LoginNotice/></Overlay>{/if}
         {#if $Globals.State === 'LoginFailure'}        <Overlay><LoginFailureNotice/></Overlay>{/if}
+        {#if $Globals.State === 'loggedOut'}           <Overlay><LogoutNotice/></Overlay>{/if}
         {#if $Globals.State === 'CommunicationFailure'}<Overlay><CommunicationFailureNotice/></Overlay>{/if}
+        {#if $Globals.State === 'multipleInstances'}   <Overlay><MultiInstanceNotice/></Overlay>{/if}
       </InfoPage>
     {/if}
   {/if}
