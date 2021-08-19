@@ -74,14 +74,11 @@
 <script lang="ts">
   let StatementChecked:boolean = false
 
-  function closeDialog (Event) {
-    Event.preventDefault()
+  function closeDialog () {
     Globals.define('State','')
   }
 
-  async function deleteAccount (Event) {
-    Event.preventDefault()
-
+  async function deleteAccount () {
     Globals.define({ State:'unregistering' })
 
     try {
@@ -107,7 +104,7 @@
 <div class="Dialog">
   <div>
     <div name="Title">Account Deletion</div>
-    <div name="CloseButton" on:click={closeDialog}>&times;</div>
+    <div name="CloseButton" on:click|preventDefault={closeDialog}>&times;</div>
 
     <div class="Block">
       You are about to delete your account.
@@ -126,6 +123,6 @@
       I accept loosing all my data
     </div>
 
-    <button disabled={! StatementChecked} on:click={deleteAccount}>Delete Account</button>
+    <button disabled={! StatementChecked} on:click|preventDefault={deleteAccount}>Delete Account</button>
   </div>
 </div>
