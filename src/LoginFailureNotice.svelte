@@ -60,20 +60,9 @@
 </script>
 
 <script lang="ts">
-  function startRegistration (Event) {
-    Event.preventDefault()
-    Globals.define('State','Registration')
-  }
-
-  function startPasswordReset (Event) {
-    Event.preventDefault()
-    Globals.define('State','ResetRequest')
-  }
-
-  function closeNotice (Event) {
-    Event.preventDefault()
-    Globals.define('State','')
-  }
+  function closeNotice ()        { Globals.define('State','') }
+  function startRegistration ()  { Globals.define('State','Registration') }
+  function startPasswordReset () { Globals.define('State','ResetRequest') }
 </script>
 
 <div class="Dialog">
@@ -86,14 +75,14 @@
 
     <div class="Block">
       If you have not yet applied for an account, just
-      <a href="#/" on:click={startRegistration}>create one</a>!
+      <a href="#/" on:click|preventDefault={startRegistration}>create one</a>!
     </div>
 
     <div class="Block">
       If you forgot your password, you may ask for a
-      <a href="#/" on:click={startPasswordReset}>password reset</a>.
+      <a href="#/" on:click|preventDefault={startPasswordReset}>password reset</a>.
     </div>
 
-    <button on:click={closeNotice}>Ok</button>
+    <button on:click|preventDefault={closeNotice}>Ok</button>
   </div>
 </div>
