@@ -116,14 +116,11 @@
 
   $: ChangeIsForbidden = firstNameLooksBad || lastNameLooksBad
 
-  function closeDialog (Event) {
-    Event.preventDefault()
+  function closeDialog () {
     Globals.define('State','')
   }
 
-  async function changeName (Event) {
-    Event.preventDefault()
-
+  async function changeName () {
     Globals.define({ State:'changingName' })
 
     try {
@@ -152,7 +149,7 @@
 <div class="Dialog">
   <div>
     <div name="Title">Name Change</div>
-    <div name="CloseButton" on:click={closeDialog}>&times;</div>
+    <div name="CloseButton" on:click|preventDefault={closeDialog}>&times;</div>
 
     <input type="text" bind:value={firstName} placeholder="your first name">
     <div class:Hint={true} class:invalid={firstNameLooksBad}>{firstNameMessage}</div>
@@ -160,6 +157,6 @@
     <input type="text" bind:value={lastName} placeholder="your last name">
     <div class:Hint={true} class:invalid={lastNameLooksBad}>{lastNameMessage}</div>
 
-    <button disabled={ChangeIsForbidden} on:click={changeName}>Change Name</button>
+    <button disabled={ChangeIsForbidden} on:click|preventDefault={changeName}>Change Name</button>
   </div>
 </div>
