@@ -129,14 +129,11 @@
 
   $: ResetIsForbidden = PasswordLooksBad || ConfirmationLooksBad
 
-  function closeDialog (Event) {
-    Event.preventDefault()
+  function closeDialog () {
     Globals.define('State','')
   }
 
-  async function resetPassword (Event) {
-    Event.preventDefault()
-
+  async function resetPassword () {
     Globals.define('State','resettingPassword')
 
     try {
@@ -154,7 +151,7 @@
 <div class="Dialog">
   <div>
     <div name="Title">Password Reset</div>
-    <div name="CloseButton" on:click={closeDialog}>&times;</div>
+    <div name="CloseButton" on:click|preventDefault={closeDialog}>&times;</div>
 
     <div class="Block">
       You may now define a new password.
@@ -171,6 +168,6 @@
     <input type="password" bind:value={Confirmation} placeholder="confirm your new password">
     <div class:Hint={true} class:invalid={ConfirmationLooksBad}>{ConfirmationMessage}</div>
 
-    <button disabled={ResetIsForbidden} on:click={resetPassword}>Reset Password</button>
+    <button disabled={ResetIsForbidden} on:click|preventDefault={resetPassword}>Reset Password</button>
   </div>
 </div>
