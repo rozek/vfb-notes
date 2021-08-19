@@ -37,6 +37,7 @@
     display:block; position:relative; flex:1 1 auto; overflow:auto;
   }
 
+
   .TabStrip {
     display:inline-flex; position:relative; overflow:hidden;
     width:100%; height:52px;
