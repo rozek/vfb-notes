@@ -97,7 +97,7 @@
       <ul>
         <li>
           your account, which was created to use this application
-          (including your email address, your first and last name and wether
+          (including your email address, your first and last name and whether
           your account has been confirmed or not)
           <br>&nbsp;<br>
           <i>The developer will never use this knowledge to send you unrequested
