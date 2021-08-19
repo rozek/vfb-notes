@@ -37,6 +37,8 @@
     display:block; position:relative; flex:1 1 auto; overflow:auto;
   }
 
+
+  .NavigationBar .Button[disabled="true"] { opacity:0.3 }
   .TabStrip {
     display:inline-flex; position:relative; overflow:hidden;
     width:100%; height:52px;
@@ -53,7 +55,6 @@
   }
 
 
-  .NavigationBar .Button[disabled="true"] { opacity:0.3 }
   .ContentArea > .Placeholder {
     display:flex; flex-flow:column nowrap; justify-content:center;
     position:absolute; left:0px; top:0px; right:0px; bottom:0px;
