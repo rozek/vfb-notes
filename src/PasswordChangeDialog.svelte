@@ -111,6 +111,9 @@
     case ! /[0-9]/.test(oldPassword):
       oldPasswordLooksBad = true;  oldPasswordMessage = 'your current password lacks any digits'
       break
+    case ! /[^a-zA-Z0-9]/.test(oldPassword):
+      oldPasswordLooksBad = true;  oldPasswordMessage = 'your current password lacks any special characters'
+      break
     case (oldPassword.toLowerCase() === oldPassword):
       oldPasswordLooksBad = true;  oldPasswordMessage = 'your current password lacks any uppercase characters'
       break
@@ -130,6 +133,9 @@
       break
     case ! /[0-9]/.test(newPassword):
       newPasswordLooksBad = true;  newPasswordMessage = 'your new password lacks any digits'
+      break
+    case ! /[^a-zA-Z0-9]/.test(newPassword):
+      newPasswordLooksBad = true;  newPasswordMessage = 'your new password lacks any special characters'
       break
     case (newPassword.toLowerCase() === newPassword):
       newPasswordLooksBad = true;  newPasswordMessage = 'your new password lacks any uppercase characters'
