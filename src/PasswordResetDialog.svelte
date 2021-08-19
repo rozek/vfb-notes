@@ -106,6 +106,9 @@
     case ! /[0-9]/.test(Password):
       PasswordLooksBad = true;  PasswordMessage = 'your password lacks any digits'
       break
+    case ! /[^a-zA-Z0-9]/.test(Password):
+      PasswordLooksBad = true;  PasswordMessage = 'your password lacks any special characters'
+      break
     case (Password.toLowerCase() === Password):
       PasswordLooksBad = true;  PasswordMessage = 'your password lacks any uppercase characters'
       break
