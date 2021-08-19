@@ -25,20 +25,6 @@
   }
 
 
-  .Dialog > div > [name="CloseButton"] {
-    display:block; position:absolute;
-    top:-20px; right:-20px; width:20px; height:20px;
-    border:solid 2px white; border-radius:50%;
-    box-shadow:0px 0px 5px 5px rgba(0,0,0,0.2), 0px 0px 0px 1px lightgray;
-    background-color:black;
-    padding:0px;
-    font-size:18px; font-weight:bold; line-height:12px;
-    text-align:center;
-    color:white;
-    cursor:pointer;
-  }
-
-
   .Dialog a, .Dialog a:visited {
     color:#2980B9;
     text-decoration:underline;
@@ -84,7 +70,7 @@
     Globals.define('State','ResetRequest')
   }
 
-  function closeMessage (Event) {
+  function closeNotice (Event) {
     Event.preventDefault()
     Globals.define('State','')
   }
@@ -108,6 +94,6 @@
       <a href="#/" on:click={startPasswordReset}>password reset</a>.
     </div>
 
-    <button on:click={closeMessage}>Ok</button>
+    <button on:click={closeNotice}>Ok</button>
   </div>
 </div>
