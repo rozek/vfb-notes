@@ -4225,7 +4225,8 @@ var app = (function () {
     /**** ValueIsPassword - a string following VoltCloud's password rules ****/
     function ValueIsPassword(Value) {
         return (ValueIsString(Value) && (Value.length >= 8) &&
-            /[0-9]/.test(Value) && (Value.toLowerCase() !== Value));
+            /[0-9]/.test(Value) && /[^a-zA-Z0-9]/.test(Value) &&
+            (Value.toLowerCase() !== Value));
     }
     /**** allow/expect[ed]Password ****/
     ValidatorForClassifier(ValueIsPassword, acceptNil, 'valid VoltCloud password');
@@ -6109,6 +6110,10 @@ var app = (function () {
     					$$invalidate(1, oldPasswordLooksBad = true);
     					$$invalidate(6, oldPasswordMessage = 'your current password lacks any digits');
     					break;
+    				case !(/[^a-zA-Z0-9]/).test(oldPassword):
+    					$$invalidate(1, oldPasswordLooksBad = true);
+    					$$invalidate(6, oldPasswordMessage = 'your current password lacks any special characters');
+    					break;
     				case oldPassword.toLowerCase() === oldPassword:
     					$$invalidate(1, oldPasswordLooksBad = true);
     					$$invalidate(6, oldPasswordMessage = 'your current password lacks any uppercase characters');
@@ -6136,6 +6141,10 @@ var app = (function () {
     				case !(/[0-9]/).test(newPassword):
     					$$invalidate(3, newPasswordLooksBad = true);
     					$$invalidate(7, newPasswordMessage = 'your new password lacks any digits');
+    					break;
+    				case !(/[^a-zA-Z0-9]/).test(newPassword):
+    					$$invalidate(3, newPasswordLooksBad = true);
+    					$$invalidate(7, newPasswordMessage = 'your new password lacks any special characters');
     					break;
     				case newPassword.toLowerCase() === newPassword:
     					$$invalidate(3, newPasswordLooksBad = true);
@@ -7119,6 +7128,10 @@ var app = (function () {
     					$$invalidate(3, PasswordLooksBad = true);
     					$$invalidate(5, PasswordMessage = 'your password lacks any digits');
     					break;
+    				case !(/[^a-zA-Z0-9]/).test(Password):
+    					$$invalidate(3, PasswordLooksBad = true);
+    					$$invalidate(5, PasswordMessage = 'your password lacks any special characters');
+    					break;
     				case Password.toLowerCase() === Password:
     					$$invalidate(3, PasswordLooksBad = true);
     					$$invalidate(5, PasswordMessage = 'your password lacks any uppercase characters');
@@ -7518,6 +7531,10 @@ var app = (function () {
     				case !(/[0-9]/).test(Password):
     					$$invalidate(1, PasswordLooksBad = true);
     					$$invalidate(4, PasswordMessage = 'your password lacks any digits');
+    					break;
+    				case !(/[^a-zA-Z0-9]/).test(Password):
+    					$$invalidate(1, PasswordLooksBad = true);
+    					$$invalidate(4, PasswordMessage = 'your password lacks any special characters');
     					break;
     				case Password.toLowerCase() === Password:
     					$$invalidate(1, PasswordLooksBad = true);
@@ -9037,6 +9054,10 @@ var app = (function () {
     				case !(/[0-9]/).test(Password):
     					$$invalidate(3, PasswordLooksBad = true);
     					$$invalidate(9, PasswordMessage = 'your password lacks any digits');
+    					break;
+    				case !(/[^a-zA-Z0-9]/).test(Password):
+    					$$invalidate(3, PasswordLooksBad = true);
+    					$$invalidate(9, PasswordMessage = 'your password lacks any special characters');
     					break;
     				case Password.toLowerCase() === Password:
     					$$invalidate(3, PasswordLooksBad = true);
