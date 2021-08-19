@@ -39,6 +39,12 @@
   }
 
 
+  .Dialog > div > .Block {
+    display:block; margin:0px 0px 10px 0px;
+    text-align:justify;
+  }
+
+
   .Dialog a, .Dialog a:visited {
     color:#2980B9;
     text-decoration:underline;
@@ -203,6 +209,11 @@
 
     <input type="email" bind:value={EMailAddress} placeholder="your email address">
     <div class:Hint={true} class:invalid={AddressLooksBad}>{AddressMessage}</div>
+
+    <div class="Block">
+      Please note: GMX.de and Web.de currently need approx. 2 hours to deliver
+      confirmation messages, other providers should be much quicker.
+    </div>
 
     <input type="password" bind:value={Password} placeholder="your password">
     <div class:Hint={true} class:invalid={PasswordLooksBad}>{PasswordMessage}</div>
