@@ -4,9 +4,9 @@
   "description": "a simple demonstrator for voltcloud-for-browsers",
   "type": "module",
   "scripts": {
-    "build": "rimraf dist && mkdir ./dist && cp ./src/index.html ./dist && rollup -c",
-    "dev": "rimraf dist && mkdir ./dist && cp ./src/index.html ./dist && rollup -c -w",
-    "start": "sirv ./dist --port 7654 --host --cors",
+    "build": "rimraf ./dist && mkdir ./dist && cp ./src/index.html ./dist && rollup -c",
+    "dev": "rimraf ./test && mkdir ./test && cp ./src/index.html ./test && rollup -c -w",
+    "start": "sirv ./test --port 7654 --host --cors",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

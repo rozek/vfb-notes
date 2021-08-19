@@ -37,7 +37,7 @@ export default {
     sourcemap:true,
     format:   'iife',
     name:     'app',
-    file:     './dist/index.js'
+    file:     production ? './dist/index.js' : './test/index.js'
   },
   plugins: [
     svelte({ preprocess:[
@@ -48,7 +48,7 @@ export default {
     postcss({ extract:false, inject:{insertAt:'top'} }),
 
     ! production && serve(),
-    ! production && livereload('./dist'),
+    ! production && livereload('./test'),
 
     production && terser()
   ],
