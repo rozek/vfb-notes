@@ -39,6 +39,12 @@
   }
 
 
+  .Dialog > div > .Block {
+    display:block; margin:0px 0px 10px 0px;
+    text-align:justify;
+  }
+
+
   .Dialog > div > input {
     appearance:none; -webkit-appearance:none; -moz-appearance:none; -o-appearance:none;
     display:block; position:relative;
@@ -80,8 +86,12 @@
   import { Globals } from './Globals.js'
 
   import {
-    focusOnApplication, actOnBehalfOfCustomer, changeCustomerPasswordTo
+    focusOnApplication, actOnBehalfOfCustomer, changeCustomerPasswordTo,
+    CustomerStorageEntry, setCustomerStorageEntryTo
   } from 'voltcloud-for-browsers'
+
+  import { randomBytes, secretbox } from 'tweetnacl'
+  import { encode, decode }         from '@stablelib/base64'
 </script>
 
 <script lang="ts">
@@ -136,22 +146,19 @@
       newConfirmationLooksBad = true;  newConfirmationMessage = 'please, enter your new password again'
       break
     case (newConfirmation !== newPassword):
-      newConfirmationLooksBad = true;  newConfirmationMessage = 'new password differs from its confirmation'
+      newConfirmationLooksBad = true;  newConfirmationMessage = 'new password differs from confirmation'
       break
     default:
-      newConfirmationLooksBad = false; newConfirmationMessage = 'new password and its confirmation are equal'
+      newConfirmationLooksBad = false; newConfirmationMessage = 'new password and confirmation are equal'
   }
 
   $: ChangeIsForbidden = oldPasswordLooksBad || newPasswordLooksBad || newConfirmationLooksBad
 
-  function closeDialog (Event) {
-    Event.preventDefault()
+  function closeDialog () {
     Globals.define('State','')
   }
 
-  async function changePassword (Event) {
-    Event.preventDefault()
-
+  async function changePassword () {
     if ($Globals.Password === oldPassword) {
       Globals.define('State','changingPassword')
 
@@ -160,26 +167,93 @@
         await actOnBehalfOfCustomer($Globals.EMailAddress,$Globals.Password)
         await changeCustomerPasswordTo(newPassword)
       } catch (Signal) {
-        if (Signal.name === 'LoginFailed') {
-          return Globals.define({ loggedIn:false, State:'loggedOut' })
-        } else {
-          return Globals.define({
-            State:'CommunicationFailure', FailureReason:Signal.toString()
-          })
+        switch (Signal.name) {
+          case 'LoginFailed':
+          case 'BadToken':
+            return Globals.define({ loggedIn:false, State:'loggedOut' })
+          default:
+            return Globals.define({
+              State:'CommunicationFailure', FailureReason:Signal.toString()
+            })
         }
       }
 
-      Globals.define({ Password:newPassword, State:'PasswordChanged' })
+      try {
+        let NoteText = decrypted((await CustomerStorageEntry('NoteText')) || '')
+          Globals.define('Password',newPassword)
+
+          if (NoteText == null) {                          // decryption failure
+            return Globals.define({
+              State:'ReencryptionFailure',
+              FailureReason:'DecryptionFailed: could not decrypt existing note'
+            })
+          }
+        await setCustomerStorageEntryTo('NoteText',encrypted(NoteText))
+      } catch (Signal) {
+        Globals.define('Password',newPassword)
+        return Globals.define({
+          State:'ReencryptionFailure', FailureReason:Signal.toString()
+        })
+      }
+
+      Globals.define('State','PasswordChanged')
     } else {
       Globals.define('State','wrongPassword')
     }
   }
+
+  function encrypted (Text:string):string {
+// @ts-ignore $Globals.EncryptionKey *is* a Uint8Array
+    let EncryptionKey  = $Globals.EncryptionKey as Uint8Array     // after login
+    let Nonce          = randomBytes(secretbox.nonceLength)
+    let encryptedValue = secretbox((new TextEncoder()).encode(Text), Nonce, EncryptionKey)
+
+    let Result = new Uint8Array(Nonce.length + encryptedValue.length)
+      Result.set(Nonce)
+      Result.set(encryptedValue,Nonce.length)
+    return encode(Result)                                  // now Base64-encoded
+  }
+
+  function decrypted (Base64Value:string):string | undefined {
+// @ts-ignore $Globals.EncryptionKey *is* a Uint8Array
+    let EncryptionKey = $Globals.EncryptionKey as Uint8Array      // after login
+
+    let Buffer
+      try {
+        Buffer = decode(Base64Value)
+      } catch (Signal) {
+        console.error('Base64 decode failed',Signal)
+        return undefined
+      }
+    let Nonce  = Buffer.slice(0,secretbox.nonceLength)
+    let decryptedValue = secretbox.open(
+      Buffer.slice(secretbox.nonceLength), Nonce, EncryptionKey
+    )
+    return (
+      decryptedValue == null
+      ? undefined
+      : (new TextDecoder()).decode(decryptedValue)
+    )
+  }
+
+
 </script>
 
 <div class="Dialog">
   <div>
     <div name="Title">Password Change</div>
-    <div name="CloseButton" on:click={closeDialog}>&times;</div>
+    <div name="CloseButton" on:click|preventDefault={closeDialog}>&times;</div>
+
+    <div class="Block">
+      You may now change your password. If successful, your notes will
+      automatically be re-encrypted using the new password.
+    </div>
+
+    <div class="Block">
+      Important: please close all other currently running instances of this
+      application (on every device and browser) or those instances could
+      damage your data!
+    </div>
 
     <input type="password" bind:value={oldPassword} placeholder="your current password">
     <div class:Hint={true} class:invalid={oldPasswordLooksBad}>{oldPasswordMessage}</div>
@@ -190,6 +264,6 @@
     <input type="password" bind:value={newConfirmation} placeholder="confirm your new password">
     <div class:Hint={true} class:invalid={newConfirmationLooksBad}>{newConfirmationMessage}</div>
 
-    <button disabled={ChangeIsForbidden} on:click={changePassword}>Change Password</button>
+    <button disabled={ChangeIsForbidden} on:click|preventDefault={changePassword}>Change Password</button>
   </div>
 </div>
