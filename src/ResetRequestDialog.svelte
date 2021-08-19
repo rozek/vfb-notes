@@ -9,11 +9,6 @@
     background-color:white;
   }
 
-  .Dialog a, .Dialog a:visited {
-    color:#2980B9;
-    text-decoration:underline;
-  }
-
   .Dialog > div {
     display:flex; position:relative;
     flex-flow:column nowrap; align-items:stretch;
@@ -52,13 +47,13 @@
     font-size:16px;
   }
 
-  .Dialog > div > .Hint {
+  .Dialog > div .Hint {
     display:inline-block; position:relative;
     left:2px; top:-2px;
     font-size:12px
   }
 
-  .Dialog > div > .invalid.Hint {
+  .Dialog > div .invalid.Hint {
     color:red;
   }
 
@@ -151,9 +146,14 @@
       link it contains will be valid for one hour.
     </div>
 
+    <div class="Block">
+      Warning: if you set a different password than before, you will loose
+      all your existing data!
+    </div>
+
     <input type="email" bind:value={EMailAddress} placeholder="your email address">
     <div class:Hint={true} class:invalid={AddressLooksBad}>{AddressMessage}</div>
 
-    <button name="SubmitButton" disabled={SubmitIsForbidden} on:click={submitRequest}>SubmitRequest</button>
+    <button name="SubmitButton" disabled={SubmitIsForbidden} on:click={submitRequest}>Request Password Reset</button>
   </div>
 </div>
