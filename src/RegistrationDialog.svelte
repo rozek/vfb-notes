@@ -167,23 +167,11 @@
     ! DPSAgreementChecked || ! TOSAgreementChecked
   )
 
-  function closeDialog (Event) {
-    Event.preventDefault()
-    Globals.define('State','')
-  }
+  function closeDialog () { Globals.define('State','') }
+  function showLegal ()   { document.location.href = '#/Legal' }
+  function startLogin ()  { Globals.define('State','Login') }
 
-  function showLegal (Event) {
-    Event.preventDefault()
-    document.location.href = '#/Legal'
-  }
-
-  function startLogin (Event) {
-    Event.preventDefault()
-    Globals.define('State','Login')
-  }
-
-  async function createAccount (Event) {
-    Event.preventDefault()
+  async function createAccount () {
     Globals.define({ State:'registering', EMailAddress, Password })
 
     try {
@@ -204,7 +192,7 @@
 
 <div class="Dialog">
   <div>
-    <div name="CloseButton" on:click={closeDialog}>&times;</div>
+    <div name="CloseButton" on:click|preventDefault={closeDialog}>&times;</div>
     <div name="Title">User Registration</div>
 
     <input type="email" bind:value={EMailAddress} placeholder="your email address">
@@ -223,7 +211,7 @@
 
     <div name="LegalRow">
       <div>
-        Agreeing to <a href="#/" on:click={showLegal}>Data Privacy Statement?</a>
+        Agreeing to <a href="#/" on:click|preventDefault={showLegal}>Data Privacy Statement?</a>
         <input type="checkbox" bind:checked={DPSAgreementChecked}>
       </div>
       <div class:Hint={true} class:invalid={! DPSAgreementChecked}>{DPSAgreementMessage}</div>
@@ -235,10 +223,10 @@
       <div class:Hint={true} class:invalid={! TOSAgreementChecked}>{TOSAgreementMessage}</div>
     </div>
 
-    <button disabled={SubmitIsForbidden} on:click={createAccount}>Create Account</button>
+    <button disabled={SubmitIsForbidden} on:click|preventDefault={createAccount}>Create Account</button>
 
     <div style="text-align:center">
-      Already have an account? <a href="#/" on:click={startLogin}>Log in!</a>
+      Already have an account? <a href="#/" on:click|preventDefault={startLogin}>Log in!</a>
     </div>
   </div>
 </div>
