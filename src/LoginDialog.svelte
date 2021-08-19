@@ -98,7 +98,7 @@
   import { ValueIsEMailAddress } from 'javascript-interface-library'
 
   import {
-    focusOnApplication, actOnBehalfOfCustomer
+    focusOnApplication, actOnBehalfOfCustomer, CustomerRecord
   } from 'voltcloud-for-browsers'
 
   import { Globals } from './Globals.js'
@@ -178,6 +178,16 @@
         Globals.define({ State:'CommunicationFailure', FailureReason:Signal.toString() })
       }
       return
+    }
+
+    try {
+      let CustomerInfo = await CustomerRecord()
+      Globals.define({
+        firstName:CustomerInfo.first_name || '',
+        lastName: CustomerInfo.last_name  || ''
+      })
+    } catch (Signal) {
+      console.error('could not retrieve CustomerRecord',Signal)
     }
 
     Globals.define({ loggedIn:true, State:'' })
