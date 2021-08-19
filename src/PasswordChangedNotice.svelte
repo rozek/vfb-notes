@@ -9,11 +9,6 @@
     background-color:white;
   }
 
-  .Dialog a, .Dialog a:visited {
-    color:#2980B9;
-    text-decoration:underline;
-  }
-
   .Dialog > div {
     display:flex; position:relative;
     flex-flow:column nowrap; align-items:stretch;
@@ -70,7 +65,13 @@
     <div name="Title">Password Changed</div>
 
     <div class="Block">
-      Your password has been successfully changed.
+      Your password has been successfully changed any your notes re-encrypted.
+    </div>
+
+    <div class="Block">
+      Important: please close all other currently running instances of this
+      application (on every device and browser) or those instances could
+      damage your data!
     </div>
 
     <button on:click={closeNotice}>Ok</button>
