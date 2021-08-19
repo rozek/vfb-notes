@@ -54,8 +54,7 @@
 </script>
 
 <script lang="ts">
-  function closeNotice (Event) {
-    Event.preventDefault()
+  function closeNotice () {
     Globals.define('State','Login')
   }
 </script>
@@ -73,6 +72,6 @@
       again.
     </div>
 
-    <button on:click={closeNotice}>Ok</button>
+    <button on:click|preventDefault={closeNotice}>Ok</button>
   </div>
 </div>
