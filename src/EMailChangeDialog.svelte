@@ -121,6 +121,7 @@
     } catch (Signal) {
       switch (Signal.name) {
         case 'LoginFailed':
+        case 'BadToken':
           return Globals.define({ loggedIn:false, State:'loggedOut' })
         case 'ConflictError':
           return Globals.define('State','EMailAddressChangeFailure')
