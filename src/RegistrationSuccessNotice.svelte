@@ -9,11 +9,6 @@
     background-color:white;
   }
 
-  .Dialog a, .Dialog a:visited {
-    color:#2980B9;
-    text-decoration:underline;
-  }
-
   .Dialog > div {
     display:flex; position:relative;
     flex-flow:column nowrap; align-items:stretch;
@@ -59,7 +54,7 @@
 </script>
 
 <script lang="ts">
-  function closeMessage (Event) {
+  function closeNotice (Event) {
     Event.preventDefault()
     Globals.define('State','')
   }
@@ -84,6 +79,6 @@
       will be removed again.
     </div>
 
-    <button on:click={closeMessage}>Ok</button>
+    <button on:click={closeNotice}>Ok</button>
   </div>
 </div>
