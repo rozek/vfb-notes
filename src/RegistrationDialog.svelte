@@ -224,7 +224,7 @@
       <div class:Hint={true} class:invalid={! TOSAgreementChecked}>{TOSAgreementMessage}</div>
     </div>
 
-    <button disabled={SubmitIsForbidden} on:click={createAccount}>Create Your Account</button>
+    <button disabled={SubmitIsForbidden} on:click={createAccount}>Create Account</button>
 
     <div style="text-align:center">
       Already have an account? <a href="#/" on:click={startLogin}>Log in!</a>
