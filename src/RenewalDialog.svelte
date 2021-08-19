@@ -9,11 +9,6 @@
     background-color:white;
   }
 
-  .Dialog a, .Dialog a:visited {
-    color:#2980B9;
-    text-decoration:underline;
-  }
-
   .Dialog > div {
     display:flex; position:relative;
     flex-flow:column nowrap; align-items:stretch;
@@ -52,13 +47,13 @@
     font-size:16px;
   }
 
-  .Dialog > div > .Hint {
+  .Dialog > div .Hint {
     display:inline-block; position:relative;
     left:2px; top:-2px;
     font-size:12px
   }
 
-  .Dialog > div > .invalid.Hint {
+  .Dialog > div .invalid.Hint {
     color:red;
   }
 
@@ -139,7 +134,7 @@
 <div class="Dialog">
   <div>
     <div name="CloseButton" on:click={closeDialog}>&times;</div>
-    <div name="Title">Confirmation Message Request</div>
+    <div name="Title">Resend Confirmation Message</div>
 
     <div class="Block">
       Your account has been created, but not yet confirmed. If necessary, you
@@ -154,6 +149,6 @@
     <input type="email" bind:value={EMailAddress} placeholder="your email address">
     <div class:Hint={true} class:invalid={AddressLooksBad}>{AddressMessage}</div>
 
-    <button name="SubmitButton" disabled={SubmitIsForbidden} on:click={submitRequest}>Request Confirmation Message</button>
+    <button name="SubmitButton" disabled={SubmitIsForbidden} on:click={submitRequest}>Resend Confirmation Message</button>
   </div>
 </div>
