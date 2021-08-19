@@ -37,21 +37,6 @@
     display:block; position:relative; flex:1 1 auto; overflow:auto;
   }
 
-  .TabStrip {
-    display:inline-flex; position:relative; overflow:hidden;
-    width:100%; height:52px;
-    border:none; border-top:solid 1px black;
-    padding:4px;
-    font-size:18px; line-height:22px; color:#0080FF;
-  }
-
-  .Tab {
-    display:inline-block; position:relative;
-    height:100%; width:25%;
-    text-align:center;
-    cursor:pointer;
-  }
-
 
 
   .ContentArea .Block {
@@ -98,29 +83,10 @@
     <div class="Block">
       <h4>Cookies and other Data stored in a Browser</h4>
 
-      "VfB-Notes" does not use cookies. It does, however, store some information
-      locally in the browser used to execute this web application, as there are:
-
-      <ul>
-        <li>stored permanently (until deletion):
-          <ul>
-            <li>your email address</li>
-          </ul>
-        </li>
-        <li>stored during a single "session" only:
-          <ul>
-            <li>your password (for automatic token refresh)</li>
-            <li>your current VoltCloud access token</li>
-          </ul>
-        </li>
-      </ul>
-
-      A "session" belongs to a single browser window (or tab). It starts when
-      you first navigate to "VfB-Notes" and ends when that browser window (or
-      tab, resp.) is closed.
-      <br>&nbsp;<br>
-      Finishing a "session" automatically deletes any session-related data
-      (i.e., access token and password)
+      "VfB-Notes" does not use cookies. It does, however, store your email
+      address locally in the browser (in an area called "localstorage"). It will
+      be kept there until explicitly deleted, but will not be accessible
+      outside this browser or for web pages from other sites.
     </div>
 
     <div class="Block">
@@ -142,7 +108,7 @@
           the notes you create
           <br>&nbsp;<br>
           <i>For that reason, "VfB-Notes" always encrypts your notes using your
-          password. Please note: your notes will become unreadable if you
+          password. Please note: your notes may become unreadable if you
           change your password using the VoltCloud "password reset" mechanism!</i>
         </li>
       </ul>
