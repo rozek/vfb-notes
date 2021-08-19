@@ -9,11 +9,6 @@
     background-color:white;
   }
 
-  .Dialog a, .Dialog a:visited {
-    color:#2980B9;
-    text-decoration:underline;
-  }
-
   .Dialog > div {
     display:flex; position:relative;
     flex-flow:column nowrap; align-items:stretch;
@@ -59,8 +54,7 @@
 </script>
 
 <script lang="ts">
-  function closeMessage (Event) {
-    Event.preventDefault()
+  function closeNotice () {
     Globals.define('State','')
   }
 </script>
@@ -84,6 +78,6 @@
       The best course of action will be to try again later.
     </div>
 
-    <button on:click={closeMessage}>Ok</button>
+    <button on:click|preventDefault={closeNotice}>Ok</button>
   </div>
 </div>
