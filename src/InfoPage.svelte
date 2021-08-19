@@ -34,7 +34,22 @@
   }
 
   .ContentArea {
-    display:block; flex:1 1 auto; overflow:auto;
+    display:block; position:relative; flex:1 1 auto; overflow:auto;
+  }
+
+  .TabStrip {
+    display:inline-flex; position:relative; overflow:hidden;
+    width:100%; height:52px;
+    border:none; border-top:solid 1px black;
+    padding:4px;
+    font-size:16px; line-height:22px; color:#0080FF;
+  }
+
+  .Tab {
+    display:inline-block; position:relative;
+    height:100%; width:25%;
+    text-align:center;
+    cursor:pointer;
   }
 
 
@@ -50,15 +65,18 @@
 </script>
 
 <script lang="ts">
-  function showLegal ()  { document.location.href = '#/Legal' }
-  function startLogin () { Globals.define('State','Login') }
+  function showLegal ()          { document.location.href = '#/Legal' }
+  function createAccount ()      { Globals.define('State','Registration') }
+  function resendConfirmation () { Globals.define('State','RenewalRequest') }
+  function resetPassword ()      { Globals.define('State','ResetRequest') }
+  function startLogin ()         { Globals.define('State','Login') }
 </script>
 
 <div class="Page">
   <div class="NavigationBar">
     <div class="left Button"  on:click|preventDefault={showLegal}>Legal Info</div>
     <div class="Title">VfB-Notes</div>
-    <div class="right Button" on:click|preventDefault={startLogin}>Proceed <span class="Caret">⟩</span></div>
+    <div class="right Button" on:click|preventDefault={startLogin}>Login <span class="Caret">⟩</span></div>
   </div>
   <div class="ContentArea">
     <div class="Block">
@@ -97,6 +115,12 @@
       <a href="https://www.appstudio.dev/app/legal/legal.php">Terms of Service</a>
       before applying for an account.
     </div>
+  </div>
+  <div class="TabStrip">
+    <div class="Tab" on:click|preventDefault={createAccount}     >Create<br>Account</div>
+    <div class="Tab" on:click|preventDefault={resendConfirmation}>Resend<br>Confirmation</div>
+    <div class="Tab" on:click|preventDefault={resetPassword}     >Reset<br>Password</div>
+    <div class="Tab" on:click|preventDefault={startLogin}        >Start<br>Login</div>
   </div>
 
   <slot></slot>
