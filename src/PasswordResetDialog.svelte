@@ -9,11 +9,6 @@
     background-color:white;
   }
 
-  .Dialog a, .Dialog a:visited {
-    color:#2980B9;
-    text-decoration:underline;
-  }
-
   .Dialog > div {
     display:flex; position:relative;
     flex-flow:column nowrap; align-items:stretch;
@@ -41,6 +36,12 @@
     text-align:center;
     color:white;
     cursor:pointer;
+  }
+
+
+  .Dialog > div > .Block {
+    display:block; margin:0px 0px 10px 0px;
+    text-align:justify;
   }
 
 
@@ -90,9 +91,10 @@
 </script>
 
 <script lang="ts">
-  let Password:string, PasswordLooksBad:boolean, PasswordMessage:string
+  let Password:string,     PasswordLooksBad:boolean,     PasswordMessage:string
+  let Confirmation:string, ConfirmationLooksBad:boolean, ConfirmationMessage:string
 
-  Password = ''
+  Password = Confirmation = ''
 
   $: switch (true) {
     case (Password === ''):
@@ -114,7 +116,18 @@
       PasswordLooksBad = false; PasswordMessage = 'your password looks acceptable'
   }
 
-  $: ResetIsForbidden = PasswordLooksBad
+  $: switch (true) {
+    case (Confirmation === ''):
+      ConfirmationLooksBad = true;  ConfirmationMessage = 'please, enter your new password again'
+      break
+    case (Confirmation !== Password):
+      ConfirmationLooksBad = true;  ConfirmationMessage = 'password differs from confirmation'
+      break
+    default:
+      ConfirmationLooksBad = false; ConfirmationMessage = 'password and confirmation are equal'
+  }
+
+  $: ResetIsForbidden = PasswordLooksBad || ConfirmationLooksBad
 
   function closeDialog (Event) {
     Event.preventDefault()
@@ -143,8 +156,20 @@
     <div name="Title">Password Reset</div>
     <div name="CloseButton" on:click={closeDialog}>&times;</div>
 
+    <div class="Block">
+      You may now define a new password.
+    </div>
+
+    <div class="Block">
+      Warning: if you set a different password than before, you will loose
+      all your existing data!
+    </div>
+
     <input type="password" bind:value={Password} placeholder="your new password">
     <div class:Hint={true} class:invalid={PasswordLooksBad}>{PasswordMessage}</div>
+
+    <input type="password" bind:value={Confirmation} placeholder="confirm your new password">
+    <div class:Hint={true} class:invalid={ConfirmationLooksBad}>{ConfirmationMessage}</div>
 
     <button disabled={ResetIsForbidden} on:click={resetPassword}>Reset Password</button>
   </div>
