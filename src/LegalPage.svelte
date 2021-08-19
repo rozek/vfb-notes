@@ -34,7 +34,22 @@
   }
 
   .ContentArea {
-    display:block; flex:1 1 auto; overflow:auto;
+    display:block; position:relative; flex:1 1 auto; overflow:auto;
+  }
+
+  .TabStrip {
+    display:inline-flex; position:relative; overflow:hidden;
+    width:100%; height:52px;
+    border:none; border-top:solid 1px black;
+    padding:4px;
+    font-size:18px; line-height:22px; color:#0080FF;
+  }
+
+  .Tab {
+    display:inline-block; position:relative;
+    height:100%; width:25%;
+    text-align:center;
+    cursor:pointer;
   }
 
 
