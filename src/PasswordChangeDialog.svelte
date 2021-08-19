@@ -215,6 +215,8 @@
   }
 
   function decrypted (Base64Value:string):string | undefined {
+    if (Base64Value === '') { return '' }
+
 // @ts-ignore $Globals.EncryptionKey *is* a Uint8Array
     let EncryptionKey = $Globals.EncryptionKey as Uint8Array      // after login
 
